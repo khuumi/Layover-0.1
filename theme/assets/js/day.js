@@ -27,7 +27,9 @@ $(document).ready(function() {
         var startDate = itObject.startD;
         var endDate = itObject.endD;
 
-        var $itineraryHTML = $('<div class="itinerary"><a href="day.html?id='+ itID +'" class="smoothScroll">' +cityN.toUpperCase() +', '+countryN.toUpperCase() +" · " +'<span class="small light">' + startDate + ' - ' + endDate + '</span></a><button type="button"  id=' +itID +' class="btn btn-danger btn-small delete-button""><span class="glyphicon glyphicon-remove"></span></button></div>')
+        var $itineraryHTML = $('<div class="itinerary"><a href=\"day.html?id='+ itID + '\">' + cityN.toUpperCase() + ', '+ countryN.toUpperCase() +
+            " · " + '<span class=\"small\">' + startDate + ' - ' + endDate + '</span></a><button type="button"  id= ' + itID + 
+            ' class=\"btn btn-danger btn-xs delete-button\"><span class="glyphicon glyphicon-remove"></span></button></div>');
         $itineraries.append($itineraryHTML);
 
     });
