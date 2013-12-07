@@ -29,8 +29,6 @@
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
-
-
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
@@ -74,25 +72,20 @@
 			</div> -->
 			<br>
 			<div class="row">
-				
-            
 				<br>
 				<div class="col-lg-6 col-lg-offset-3">
-
 					<h1>Layover</h1>
-				<br>
-				<div id="location">
-                <h3>Add a new itinerary</h3>
-                <input type="text" autocomplete="on" id="location-input" placeholder="Where are you going?"/> <button class="btn btn-success" id="add-button" >Add</button>
-            	
-            	     <div class="input-daterange">
-                                    <input class="input-small" name="start"  id="start_date" placeholder="yyyy-mm-dd" />
-                                    <span class="add-on">
-                                        to
-                                    </span>
-                                    <input class="input-small" name="end" id = "end_date" placeholder="yyyy-mm-dd" />
-                                </div>
-                                           	</div>
+					<br>
+					<div id="location">
+	                	<h3>Add a new itinerary</h3>
+	                	<input type="text" autocomplete="on" id="location-input" placeholder="Where are you going?"/>
+	                	<button class="btn btn-success" id="add-button" >Add</button>
+	            	    <div class="input-daterange">
+	                        <input class="input-small" name="start"  id="start_date" placeholder="yyyy-mm-dd" />
+	                        <span class="add-on">to</span>
+	                        <input class="input-small" name="end" id = "end_date" placeholder="yyyy-mm-dd" />
+	                   	</div>
+	                </div>
 
 				</div>
 			</div>
@@ -102,7 +95,7 @@
 	
 
 	<!-- ========== CONTACT SECTION ========== -->
-	<section id="contact" name="contact"></section>
+	<!-- <section id="contact" name="contact"></section>
 	<div id="f">
 		<div class="container">
 			<div class="row">
@@ -114,7 +107,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	
 	  <!-- jQuery -->
@@ -129,8 +122,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#from-input').datepicker();
-            $('#to-input').datepicker();
+            $('#start_date').datepicker();
+            $('#end_date').datepicker();
         });
     </script>
 

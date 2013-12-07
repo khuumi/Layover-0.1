@@ -25,6 +25,21 @@ h1, h2, h3, h4, h5, h6 {
     color: #333;
 }
 
+#header-content h1.logo a {
+	font-family: 'Oswald', sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	letter-spacing: 0.15em;
+	line-height: 40px;
+	text-transform: uppercase;
+	color: #ffffff;
+	margin-top: 20px;
+}
+
+#header-content h1.logo a:hover {
+	color: #f85c37;
+}
+
 
 /* Paragraph & Typographic */
 p {
@@ -85,7 +100,7 @@ a:after {
 	text-align:center;
 	background-attachment: relative;
 	background-position: center center;
-	min-height: 700px;
+	min-height: 900px;
 	width: 100%;
 	
     -webkit-background-size: 100%;

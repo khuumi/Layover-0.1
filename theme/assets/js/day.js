@@ -16,6 +16,37 @@ $(document).ready(function() {
     var itID = getParameterByName('id');
     console.log(itID);
 
+    var $itineraries = $('<div id="listOfItin"></div>');
+
+    store.forEach(function(itID, value) {
+       
+        var itObject = store.get(itID);
+        //alert(itObject);
+        var cityN = itObject.city;
+        var countryN = itObject.country;
+        var startDate = itObject.startD;
+        var endDate = itObject.endD;
+
+        var $itineraryHTML = $('<div class="itinerary"><a href="day.html?id='+ itID +'" class="smoothScroll">' +cityN.toUpperCase() +', '+countryN.toUpperCase() +" · " +'<span class="small light">' + startDate + ' - ' + endDate + '</span></a><button type="button"  id=' +itID +' class="btn btn-danger btn-small delete-button""><span class="glyphicon glyphicon-remove"></span></button></div>')
+        $itineraries.append($itineraryHTML);
+
+    });
+
+    $("#itineraries").html($itineraries);
+    //end for loop
+
+
+    $('.delete-button').click(function(){
+        // console.log($(this).attr("id"));
+            var id = $(this).attr("id");
+
+                        alert(id);
+
+        store.remove(id);
+        window.location.reload(true);
+
+    }); //end delete button function
+
 
     var itinerary = store.get(itID);
 
@@ -29,7 +60,7 @@ $(document).ready(function() {
         // },
         defaultView: 'agendaDay',
         allDaySlot: false,
-        height: 550,
+        height: 530,
         editable: true,
         slotEventOverlap: false,
         droppable: true, // this allows things to be dropped onto the calendar !!!

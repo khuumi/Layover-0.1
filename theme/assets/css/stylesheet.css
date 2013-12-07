@@ -81,7 +81,7 @@ a:link, a:hover, a:visited, a:active {
 #location input[type="text"] {
     outline: none;
     width: 420px;
-    height: 28px;
+    height: 30px;
     line-height: 25px;
     margin: 10px;
     padding: 10px 10px 10px 45px;
@@ -197,26 +197,106 @@ a:link, a:hover, a:visited, a:active {
     width: 1000px;
     margin: 0 auto;
 }
+
 #main-left {
     float: left;
     width: 410px;
-    min-height: 500px;
+    min-height: 550px;
     margin: 30px 10px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
     box-shadow: 0 0 3px #333;
     font-family: 'arial';
+    position: fixed;
 }
+
 #main-right {
     float: right;
     width: 500px;
-    min-height: 500px;
+    min-height: 550px;
     margin: 30px 10px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
     box-shadow: 0 0 3px #333;
+}
+
+#search-form {
+    text-align: left;
+}
+
+#search-form input[type="text"] {
+    outline: none;
+    width: 400px;
+    height: 30px;
+    line-height: 25px;
+    margin: 0px;
+    padding: 10px 10px 10px 45px;
+    background: white url('../img/search.png') left center no-repeat;
+    border: 1px solid #999;
+    border-radius: 5px;
+    font-family: 'Open Sans';
+    font-size: 18px;
+    color: #0F67A6;
+    transition: 0.25s;
+}
+#search-form input[type="text"]:focus {
+    box-shadow: 0 0 7px #2D97E3;
+}
+
+#search-form button {
+    width: 70px;
+    margin: 2px;
+    padding: 0px;
+    border: 1px solid #1869A3;
+    border-radius: 5px;
+    background: #2B91D9;
+    color: white;
+    font-family: 'Open Sans';
+    font-size: 16px;
+    height: 30px;
+}
+#search-form button:hover {
+    box-shadow: 0 0 7px #2D97E3;
+}
+
+
+.list-row {
+    width: 100%;
+    display:inline-block;
+}
+.list-row:hover {
+    cursor: pointer;
+    background: #ddd;
+}
+
+.list-left {
+    width:20px;
+    padding:10px;
+    float: left;
+    font-size: 15px;
+}
+
+.list-middle {
+    width:320px;
+    padding:5px;
+    float:left;
+}
+
+.list-middle b {
+    color: #2fa4e7;
+    font-size: 20px;
+}
+
+.list-middle small {
+    font-size: 10px;
+}
+
+.list-right {
+    padding: 5px;
+    float:right;
+    text-align: right;
 }
 
 /******** TEMPORARY **********/

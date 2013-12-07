@@ -163,6 +163,7 @@ a:link, a:hover, a:visited, a:active {
     background: #1869A3;
     color: white;
 }
+
 #itineraries {
     width: 600px;
     min-height: 300px; /* Temporary? */
@@ -184,6 +185,7 @@ a:link, a:hover, a:visited, a:active {
     background: #bbb;
     cursor: pointer;
 }
+
 
 /*===============
    Day view page
