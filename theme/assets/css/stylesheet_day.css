@@ -1,0 +1,309 @@
+/*================
+   General layout
+  ================*/
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans';
+    background: url('../img/bg.png');
+}
+header {
+    height: 50px;
+    background: #222;
+    border-bottom: 1px solid black;
+    box-shadow: 0 0 3px #333;
+}
+#header-content {
+    width: 980px;
+    padding: 0 10px;
+    margin: 0 auto;
+    line-height: 50px;
+}
+footer {
+    clear: both;
+    margin: 20px;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}
+footer hr {
+    width: 400px;
+    margin: 5px auto;
+    color: #666;
+}
+
+/*==============
+   Headers/text
+  ==============*/
+h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #eee;
+    text-shadow: 1px 1px 5px black;
+}
+h1:hover {
+    color: #CEE1ED;
+}
+h2 {
+    margin: 0 0 5px 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+a:link, a:hover, a:visited, a:active {
+    text-decoration: none;
+    color: inherit; 
+}
+.small {
+    font-size: 12px;
+}
+.light {
+    color: #444;
+}
+
+/*===========
+   Home page
+  ===========*/
+#form {
+    width: 600px;
+    margin: 50px auto;
+    padding: 30px 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #eee;
+    box-shadow: 0 0 3px #333;
+}
+#location {
+    text-align: center;
+}
+#location input[type="text"] {
+    outline: none;
+    width: 420px;
+    height: 25px;
+    line-height: 25px;
+    margin: 10px;
+    padding: 10px 10px 10px 45px;
+    background: white url('../img/search.png') left center no-repeat;
+    border: 1px solid #999;
+    border-radius: 5px;
+    font-family: 'Open Sans';
+    font-size: 18px;
+    color: #0F67A6;
+    transition: 0.25s;
+}
+#location input[type="text"]:focus {
+    box-shadow: 0 0 7px #2D97E3;
+}
+#time {
+    text-align: center;
+    font-size: 14px;
+}
+#time input[type="text"] {
+    outline: none;
+    width: 150px;
+    height: 25px;
+    line-height: 25px;
+    margin: 10px;
+    padding: 5px 10px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    color: #0F67A6;
+    transition: 0.25s;
+}
+#time input[type="text"]:focus {
+    box-shadow: 0 0 7px #2D97E3;
+}
+#add-button {
+    display: block;
+    width: 100px;
+    margin: 10px auto 0;
+    padding: 5px;
+    border: 1px solid #1869A3;
+    border-radius: 5px;
+    background: #2B91D9;
+    color: white;
+    font-family: 'Open Sans';
+    font-size: 16px;
+}
+.delete-button {
+/*    display: block;
+
+
+*/  
+    position: absolute; 
+    right: 0px;
+    top: 0px;
+    width: 100px;
+    padding: 5px;
+    float: right;
+    border: 1px solid #1869A3;
+    border-radius: 5px;
+    background: black;
+    color: white;
+    font-family: 'Open Sans';
+
+    font-size: 16px;
+}
+#delete-button:hover {
+    cursor: pointer;
+    border: 1px solid #0C4D7A;
+    background: #1869A3;
+    color: white;
+}
+
+
+
+#add-button:hover {
+    cursor: pointer;
+    border: 1px solid #0C4D7A;
+    background: #1869A3;
+    color: white;
+}
+#itineraries {
+    width: 600px;
+    min-height: 300px; /* Temporary? */
+    margin: 50px auto;
+    padding: 30px 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #eee;
+    box-shadow: 0 0 3px #333;
+    text-align: center;
+}
+.itinerary {
+    margin: 10px;
+    padding: 10px;
+    background: #ccc;
+    position: relative;
+}
+.itinerary:hover {
+    background: #bbb;
+    cursor: pointer;
+}
+
+/*===============
+   Day view page
+  ===============*/
+#wrapper {
+    width: 1000px;
+    margin: 0 auto;
+}
+#main-left {
+    float: left;
+    width: 410px;
+    min-height: 550px;
+    margin: 30px 10px;
+    padding: 10px;
+    border: 1px solid #333;
+    background: #eee;
+    box-shadow: 0 0 3px #333;
+    font-family: 'arial';
+    position: fixed;
+}
+#main-right {
+    float: right;
+    width: 500px;
+    min-height: 550px;
+    margin: 30px 10px;
+    padding: 10px;
+    border: 1px solid #333;
+    background: #eee;
+    box-shadow: 0 0 3px #333;
+}
+
+#search-form {
+    text-align: left;
+}
+#search-form input[type="text"] {
+    outline: none;
+    width: 320px;
+    height: 25px;
+    line-height: 25px;
+    margin: 10px;
+    padding: 10px 10px 10px 45px;
+    background: white url('../img/search.png') left center no-repeat;
+    border: 1px solid #999;
+    border-radius: 5px;
+    font-family: 'Open Sans';
+    font-size: 18px;
+    color: #0F67A6;
+    transition: 0.25s;
+}
+#search-form input[type="text"]:focus {
+    box-shadow: 0 0 7px #2D97E3;
+}
+
+#search-form button {
+    width: 90px;
+    margin: 10px auto 0;
+    padding: 5px;
+    border: 1px solid #1869A3;
+    border-radius: 5px;
+    background: #2B91D9;
+    color: white;
+    font-family: 'Open Sans';
+    font-size: 16px;
+    height: 45px;
+}
+
+
+
+.list-row {
+    width: 100%;
+    display:inline-block;
+}
+.list-row:hover {
+    cursor: pointer;
+    background: #ddd;
+}
+
+.list-left {
+    width:20px;
+    padding:10px;
+    float: left;
+    font-size: 15px;
+}
+
+.list-middle {
+    width:320px;
+    padding:5px;
+    float:left;
+}
+
+.list-middle b {
+    color: #2fa4e7;
+    font-size: 20px;
+}
+
+.list-middle small {
+    font-size: 10px;
+}
+
+.list-right {
+    padding:5px;
+    float:right;
+    text-align: right;
+}
+
+
+/******** TEMPORARY **********/
+#test1, #test2 {
+    padding: 10px;
+    margin: 10px;
+    background: #ccc;
+}
+#test1:hover, #test2:hover {
+    cursor: pointer;
+    background: #bbb;
+}
+
+/*===============
+   Miscellaneous
+  ===============*/
+.clear {
+    clear: both;
+}
