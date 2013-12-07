@@ -13,12 +13,27 @@ header {
     border-bottom: 1px solid black;
     box-shadow: 0 0 3px #333;
 }
+
 #header-content {
     width: 980px;
     padding: 0 10px;
     margin: 0 auto;
-    line-height: 50px;
+    /*line-height: 50px;*/
 }
+
+#header-content h1.logo a {
+    /*font-family: 'Oswald', sans-serif;*/
+    font-size: 20px;
+    letter-spacing: 0.15em;
+    line-height: 50px;
+    color: #ffffff;
+    margin: 0 auto;
+}
+
+#header-content h1.logo a:hover {
+    color: #f85c37;
+}
+
 footer {
     clear: both;
     margin: 20px;
@@ -207,7 +222,7 @@ h2 {
 
 #main-left {
     float: left;
-    width: 410px;
+    width: 430px;
     min-height: 550px;
     margin: 30px 10px;
     padding: 10px;
@@ -220,7 +235,7 @@ h2 {
 
 #main-right {
     float: right;
-    width: 500px;
+    width: 530px;
     min-height: 550px;
     margin: 30px 10px;
     padding: 10px;
@@ -235,7 +250,7 @@ h2 {
 
 #search-form input[type="text"] {
     outline: none;
-    width: 400px;
+    width: 430px;
     height: 30px;
     line-height: 25px;
     margin: 0px;
