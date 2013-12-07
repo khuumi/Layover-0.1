@@ -26,9 +26,6 @@ $(document).ready(function() {
                             })
 
 
-
-
-
         // Iterate through all the stored itineraries and display them using jquery
 
         //Assuming I am in a for loop and that i am dealing with an intinerary object: 
@@ -46,7 +43,7 @@ $(document).ready(function() {
             var startDate = itObject.startD;
             var endDate = itObject.endD;
 
-            var $itineraryHTML = $('<a href="day.html?id='+ itID +'" class="smoothScroll"><div class="itinerary">' +cityN +', '+countryN +" · " +'<span class="small light">' + startDate + ' -' + endDate + '</span></a><button type="button"  id=' +itID +' class="btn btn-danger btn-small delete-button "><span class="glyphicon glyphicon-remove"></span></button></div>')
+            var $itineraryHTML = $('<div class="itinerary"><a href="day.html?id='+ itID +'" class="smoothScroll">' +cityN.toUpperCase() +', '+countryN.toUpperCase() +" · " +'<span class="small light">' + startDate + ' - ' + endDate + '</span></a><button type="button"  id=' +itID +' class="btn btn-danger btn-small delete-button""><span class="glyphicon glyphicon-remove"></span></button></div>')
             $itineraries.append($itineraryHTML);
 
         });
@@ -73,8 +70,8 @@ $(document).ready(function() {
 
             var location = $("#location-input").val();
 
-            var locID = location.replace(" ", "_");
-            locID = locID.replace(",", "");
+            var locID = location.split(' ').join('_').replace(/\,/g,'');
+            //locID = locID.replace(",", "");
 
             var res = location.split(",");
 
@@ -83,8 +80,14 @@ $(document).ready(function() {
 
 
 
-            var startDate = $("#from-input").val();
-            var endDate = $("#to-input").val();
+            var startDate = $("#start_date").val().split('-').join('/');
+            var endDate = $("#end_date").val().split('-').join('/');;
+
+            if (location == "" || startDate == "" || endDate == "") {   //Validation
+                var err = ("The following fields must be filled:" + (location == "" ?"\n - Location":"") + (startDate == ""?"\n - Start Date":"") + (endDate == ""?"\n - End Date":""));
+                alert(err);
+                return false;
+            }
 
             var sDate = new Date(startDate);
             var eDate = new Date(endDate);
@@ -97,11 +100,10 @@ $(document).ready(function() {
             var endMonth = eDate.getMonth()
             var endYear = eDate.getFullYear();
 
-
             //We need to get the dates from here and save it as day, month, and year
 
 
-            var itineraryID = locID+startDay+startMonth+startYear+endDay+endMonth+endYear;
+            var itineraryID = locID+ ';' +startDay+'/'+startMonth+'/'+startYear+'-'+endDay+'/'+endMonth+'/'+endYear;
             var arrayofEvents = new Array();
 
             console.dir(locID);

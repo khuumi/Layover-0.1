@@ -170,7 +170,7 @@ a:link, a:hover, a:visited, a:active {
 }
 /*#itineraries {
     width: 600px;
-    min-height: 300px; /* Temporary? */
+    min-height: 300px; /* Temporary? 
     margin: 50px auto;
     padding: 30px 10px;
     border: 1px solid #333;
@@ -178,17 +178,15 @@ a:link, a:hover, a:visited, a:active {
     background: #eee;
     box-shadow: 0 0 3px #333;
     text-align: center;
-}
+}*/
 .itinerary {
     margin: 10px;
     padding: 10px;
-    background: #ccc;
     position: relative;
     display: inline;
 
-}*/
-.itinerary:hover {
-    background: #bbb;
+}
+.itinerary a:hover {
     cursor: pointer;
 }
 
