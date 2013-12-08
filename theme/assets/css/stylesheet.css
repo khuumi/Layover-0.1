@@ -111,7 +111,7 @@ p {
 }
 #location input[type="text"] {
     outline: none;
-    width: 420px;
+    width: 400px;
     height: 30px;
     line-height: 25px;
     margin: 10px;
@@ -156,9 +156,10 @@ p {
     border: 1px solid #1869A3;
     border-radius: 5px;
     background: #2B91D9;
+    height: 40px;
     color: white;
     font-family: 'Open Sans';
-    font-size: 16px;
+    font-size: 20px;
 }
 
 /*===========
@@ -288,9 +289,9 @@ p {
 
 #main-right {
     float: right;
-    width: 530px;
+    width: 500px;
     min-height: 550px;
-    margin: 30px 10px;
+    margin: 30px 5px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
@@ -303,7 +304,7 @@ p {
 
 #search-form input[type="text"] {
     outline: none;
-    width: 430px;
+    width: 70%;
     height: 30px;
     line-height: 25px;
     margin: 0px;
@@ -355,8 +356,8 @@ p {
 }
 
 .list-middle {
-    width:320px;
-    padding:5px;
+   /* width:320px;
+   */ padding:5px;
     float:left;
 }
 
