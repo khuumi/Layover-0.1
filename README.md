@@ -1,4 +1,4 @@
 altVersion
 ==========
 
-I pretty much gave up -- ran into some CSS issues -- especially the delete button -- probably something easy but I didn't want to waste time on it. 
+Daniel and I created alternate one where we made the design to look differently. Please provide feedback.
