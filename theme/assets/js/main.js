@@ -27,16 +27,16 @@ $(document).ready(function() {
     });
 
 
-    $('.delete-button').click(function(){
-        // console.log($(this).attr("id"));
-            var id = $(this).attr("id");
+    // $('.delete-button').click(function(){
+    //     // console.log($(this).attr("id"));
+    //         var id = $(this).attr("id");
 
-            			alert(id);
+    //         			alert(id);
 
-        store.remove(id);
-        window.location.reload(true);
+    //     store.remove(id);
+    //     window.location.reload(true);
 
-    }); //end delete button function
+    // }); //end delete button function
 
 
     $('#add-button').click(function() {

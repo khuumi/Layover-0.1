@@ -26,18 +26,6 @@ $(document).ready(function() {
     $('#header-itinerary').html('<h3>' + cityN + ', ' + countryN + ' (' + startDate + ' - ' + endDate + ')</h3>');
 
 
-    $('.delete-button').click(function(){
-        // console.log($(this).attr("id"));
-            var id = $(this).attr("id");
-
-            var r = confirm(id);
-            if (r==true) {
-                store.remove(id);
-                window.location.reload(true);
-            }
-    }); //end delete button function
-
-
     var itinerary = store.get(itID);
 
     /* Fullcalender init */

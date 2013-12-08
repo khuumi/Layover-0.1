@@ -27,6 +27,22 @@ $(document).ready(function() {
 
     $("#itineraries").html($itineraries);
     //end for loop
+
+    $('.delete-button').click(function(){
+    // console.log($(this).attr("id"));
+        var id = $(this).attr("id");
+        var itObject = store.get(id);
+        var cityN = itObject.city;
+        var countryN = itObject.country;
+        var startDate = itObject.startD;
+        var endDate = itObject.endD;
+
+        var r = confirm('Do you want to delete the itinerary:\n' + cityN + ', ' + countryN + ' (' + startDate + ' - ' + endDate + ') ?');
+        if (r==true) {
+            store.remove(id);
+            window.location.reload(true);
+        }
+    }); //end delete button function
 });
 
 ;(function(){
