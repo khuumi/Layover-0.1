@@ -12,6 +12,9 @@ header {
     background: #222;
     border-bottom: 1px solid black;
     box-shadow: 0 0 3px #333;
+   /* position: fixed;
+    right: 0;
+    left: 0;*/
 }
 
 #header-content {
@@ -32,6 +35,11 @@ header {
 
 #header-content h1.logo a:hover {
     color: #f85c37;
+}
+
+#header-content h3 {
+    /*color: #ffffff;*/
+    margin: 0 auto;
 }
 
 footer {
@@ -312,6 +320,7 @@ h2 {
 .list-left {
     width:20px;
     padding:10px;
+    margin-right: 10px;
     float: left;
     font-size: 15px;
 }

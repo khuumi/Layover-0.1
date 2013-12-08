@@ -10,11 +10,19 @@ $(document).ready(function() {
         if (!store.enabled) {
             alert('Local storage is not supported by your browser. Please disabled "Private Mode", or upgrade to a modern browser')
             return
-        }   
+        }
     }
 
     var itID = getParameterByName('id');
     console.log(itID);
+
+    var itObject = store.get(itID);
+    var cityN = itObject.city;
+    var countryN = itObject.country;
+    var startDate = itObject.startD;
+    var endDate = itObject.endD;
+
+    $('#header-itinerary').html('<h3>' + cityN + ', ' + countryN + ' (' + startDate + ' - ' + endDate + ')</h3>');
 
     var $itineraries = $('<div id="listOfItin"></div>');
 
@@ -28,7 +36,7 @@ $(document).ready(function() {
         var endDate = itObject.endD;
 
         var $itineraryHTML = $('<div class="itinerary">' + '<div id="menu-left">' + '<a href=\"day.html?id='+ itID + '\">' + 
-            cityN.toUpperCase() + ', '+ countryN.toUpperCase() + '<br>' + '<span class=\"small\">' + startDate + ' - ' + endDate + 
+            cityN + ', '+ countryN + '<br>' + '<span class=\"small\">' + startDate + ' - ' + endDate + 
             '</span></a></div>' + '<div id="menu-right"> <button type="button"  id= ' + itID + 
             ' class=\"btn btn-danger btn-xs delete-button\"><span class="glyphicon glyphicon-remove"></span></button></div>' + '</div>');
         $itineraries.append($itineraryHTML);
@@ -43,11 +51,11 @@ $(document).ready(function() {
         // console.log($(this).attr("id"));
             var id = $(this).attr("id");
 
-                        alert(id);
-
-        store.remove(id);
-        window.location.reload(true);
-
+            var r = confirm(id);
+            if (r==true) {
+                store.remove(id);
+                window.location.reload(true);
+            }
     }); //end delete button function
 
 

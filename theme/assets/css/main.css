@@ -296,7 +296,7 @@ a:after {
 
 #menuToggle {
 	position: absolute;
-	top: 20px;
+	top: 60px;
 	left: 0;
 	z-index: 11;
 	display: block;
@@ -307,7 +307,7 @@ a:after {
 	height: 40px;
 	line-height: 40px;
 	cursor: pointer;
-	background: rgba(0,0,0,0.25);
+	background: rgba(255,0,0,0.5);
 	-webkit-transition: all .1s ease-in-out;
 	   -moz-transition: all .1s ease-in-out;
 		-ms-transition: all .1s ease-in-out;
@@ -317,7 +317,7 @@ a:after {
 
 #menuToggle:hover {
 	color: #ffffff;
-	background: rgba(0,0,0,0.2);
+	background: rgba(255,0,0,0.25);
 	-webkit-transition: all .1s ease-in-out;
 	   -moz-transition: all .1s ease-in-out;
 		-ms-transition: all .1s ease-in-out;

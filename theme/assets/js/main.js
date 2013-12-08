@@ -50,7 +50,7 @@ $(document).ready(function() {
         // $itineraries.append($itineraryHTML);
 
         var $itineraryHTML = $('<div class="itinerary">' + '<div id="menu-left">' + '<a href=\"day.html?id='+ itID + '\">' + 
-            cityN.toUpperCase() + ', '+ countryN.toUpperCase() + '<br>' + '<span class=\"small\">' + startDate + ' - ' + endDate + 
+            cityN + ', '+ countryN + '<br>' + '<span class=\"small\">' + startDate + ' - ' + endDate + 
             '</span></a></div>' + '<div id="menu-right"> <button type="button"  id= ' + itID + 
             ' class=\"btn btn-danger btn-xs delete-button\"><span class="glyphicon glyphicon-remove"></span></button></div>' + '</div>');
         $itineraries.append($itineraryHTML);
