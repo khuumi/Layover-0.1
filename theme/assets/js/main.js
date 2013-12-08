@@ -27,18 +27,6 @@ $(document).ready(function() {
     });
 
 
-    // $('.delete-button').click(function(){
-    //     // console.log($(this).attr("id"));
-    //         var id = $(this).attr("id");
-
-    //         			alert(id);
-
-    //     store.remove(id);
-    //     window.location.reload(true);
-
-    // }); //end delete button function
-
-
     $('#add-button').click(function() {
         //here the add button is called, I want to get the information
         //from the add button to create a new itinerary 

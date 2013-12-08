@@ -15,15 +15,9 @@ $(document).ready(function() {
 
     //display current itinerary
     var itID = getParameterByName('id');
-    console.log(itID);
+    var id = store.get(itID);
 
-    var itObject = store.get(itID);
-    var cityN = itObject.city;
-    var countryN = itObject.country;
-    var startDate = itObject.startD;
-    var endDate = itObject.endD;
-
-    $('#header-itinerary').html('<h3>' + cityN + ', ' + countryN + ' (' + startDate + ' - ' + endDate + ')</h3>');
+    $('#header-itinerary').html('<h3>' + id.city + ', ' + id.country + ' (' + id.startD + ' - ' + id.endD + ')</h3>');
 
 
     var itinerary = store.get(itID);

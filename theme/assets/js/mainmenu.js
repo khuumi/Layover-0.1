@@ -10,15 +10,9 @@ $(document).ready(function() {
 
     store.forEach(function(itID, value) {
        
-        var itObject = store.get(itID);
-        //alert(itObject);
-        var cityN = itObject.city;
-        var countryN = itObject.country;
-        var startDate = itObject.startD;
-        var endDate = itObject.endD;
-
+        var id = store.get(itID);
         var $itineraryHTML = $('<div class="itinerary">' + '<div id="menu-left">' + '<a href=\"day.html?id='+ itID + '\">' + 
-            cityN + ', '+ countryN + '<br>' + '<span class=\"small\">' + startDate + ' - ' + endDate + 
+            id.city + ', '+ id.country + '<br>' + '<span class=\"small\">' + id.startD + ' - ' + id.endD + 
             '</span></a></div>' + '<div id="menu-right"> <button type="button"  id= ' + itID + 
             ' class=\"btn btn-danger btn-xs delete-button\"><span class="glyphicon glyphicon-remove"></span></button></div>' + '</div>');
         $itineraries.append($itineraryHTML);
@@ -30,16 +24,12 @@ $(document).ready(function() {
 
     $('.delete-button').click(function(){
     // console.log($(this).attr("id"));
-        var id = $(this).attr("id");
-        var itObject = store.get(id);
-        var cityN = itObject.city;
-        var countryN = itObject.country;
-        var startDate = itObject.startD;
-        var endDate = itObject.endD;
+        var itID = $(this).attr("id");
+        var id = store.get(itID);
 
-        var r = confirm('Do you want to delete the itinerary:\n' + cityN + ', ' + countryN + ' (' + startDate + ' - ' + endDate + ') ?');
+        var r = confirm('Do you want to delete the itinerary:\n' + id.city + ', ' + id.country + ' (' + id.startD + ' - ' + id.endD + ') ?');
         if (r==true) {
-            store.remove(id);
+            store.remove(itID);
             window.location.reload(true);
         }
     }); //end delete button function
