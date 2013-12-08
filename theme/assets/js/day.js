@@ -13,6 +13,7 @@ $(document).ready(function() {
         }
     }
 
+    //display current itinerary
     var itID = getParameterByName('id');
     console.log(itID);
 
@@ -23,28 +24,6 @@ $(document).ready(function() {
     var endDate = itObject.endD;
 
     $('#header-itinerary').html('<h3>' + cityN + ', ' + countryN + ' (' + startDate + ' - ' + endDate + ')</h3>');
-
-    var $itineraries = $('<div id="listOfItin"></div>');
-
-    store.forEach(function(itID, value) {
-       
-        var itObject = store.get(itID);
-        //alert(itObject);
-        var cityN = itObject.city;
-        var countryN = itObject.country;
-        var startDate = itObject.startD;
-        var endDate = itObject.endD;
-
-        var $itineraryHTML = $('<div class="itinerary">' + '<div id="menu-left">' + '<a href=\"day.html?id='+ itID + '\">' + 
-            cityN + ', '+ countryN + '<br>' + '<span class=\"small\">' + startDate + ' - ' + endDate + 
-            '</span></a></div>' + '<div id="menu-right"> <button type="button"  id= ' + itID + 
-            ' class=\"btn btn-danger btn-xs delete-button\"><span class="glyphicon glyphicon-remove"></span></button></div>' + '</div>');
-        $itineraries.append($itineraryHTML);
-
-    });
-
-    $("#itineraries").html($itineraries);
-    //end for loop
 
 
     $('.delete-button').click(function(){

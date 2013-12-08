@@ -27,39 +27,6 @@ $(document).ready(function() {
     });
 
 
-    // Iterate through all the stored itineraries and display them using jquery
-
-    //Assuming I am in a for loop and that i am dealing with an intinerary object: 
-       
-    // var itID = 
-
-    var $itineraries = $('<div id="listOfItin"></div>');
-
-    store.forEach(function(itID, value) {
-       
-        var itObject = store.get(itID);
-        //alert(itObject);
-        var cityN = itObject.city;
-        var countryN = itObject.country;
-        var startDate = itObject.startD;
-        var endDate = itObject.endD;
-
-        // var $itineraryHTML = $('<div class="itinerary"><a href="day.html?id='+ itID +'" class="smoothScroll">' +cityN.toUpperCase() +', '+
-        //     countryN.toUpperCase() +" · " +'<span class="small light">' + startDate + ' - ' + endDate + '</span></a><button type="button"  id=' +
-        //     itID +' class="btn btn-danger btn-small delete-button""><span class="glyphicon glyphicon-remove"></span></button></div>')
-        // $itineraries.append($itineraryHTML);
-
-        var $itineraryHTML = $('<div class="itinerary">' + '<div id="menu-left">' + '<a href=\"day.html?id='+ itID + '\">' + 
-            cityN + ', '+ countryN + '<br>' + '<span class=\"small\">' + startDate + ' - ' + endDate + 
-            '</span></a></div>' + '<div id="menu-right"> <button type="button"  id= ' + itID + 
-            ' class=\"btn btn-danger btn-xs delete-button\"><span class="glyphicon glyphicon-remove"></span></button></div>' + '</div>');
-        $itineraries.append($itineraryHTML);
-    });
-
-    $("#itineraries").html($itineraries);
-    //end for loop
-
-
     $('.delete-button').click(function(){
         // console.log($(this).attr("id"));
             var id = $(this).attr("id");
