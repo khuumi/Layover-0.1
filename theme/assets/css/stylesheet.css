@@ -15,11 +15,15 @@ header {
    /* position: fixed;
     right: 0;
     left: 0;*/
+    top: 0;
+    z-index:1;
+    position: fixed;
+    width: 100%;
 }
 
 #header-content {
     width: 980px;
-    padding: 0 10px;
+    padding: 0 10px 40px;
     margin: 0 auto;
     /*line-height: 50px;*/
 }
@@ -277,8 +281,8 @@ p {
 #main-left {
     float: left;
     width: 430px;
-    min-height: 550px;
-    margin: 30px 10px;
+/*    min-height: 550px;
+*/    margin: 85px 10px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
@@ -291,7 +295,7 @@ p {
     float: right;
     width: 500px;
     min-height: 550px;
-    margin: 30px 5px;
+    margin: 85px 5px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
