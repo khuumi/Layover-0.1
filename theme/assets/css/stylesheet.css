@@ -144,6 +144,10 @@ h2 {
     font-family: 'Open Sans';
     font-size: 16px;
 }
+
+/*===========
+   Right menu
+  ===========*/
 .delete-button {
     /*display: block;
 */
@@ -197,19 +201,31 @@ h2 {
     text-align: center;
 }*/
 .itinerary {
-    margin: 0px;
+    width: 350px;
+    margin: 5px;
     padding: 5px;
     position: relative;
     float: left;
+    display: inline;
 }
 
 .itinerary a {
-    display: inline;
+    /*display: inline;*/
 }
 
 .itinerary a:hover {
     cursor: pointer;
     color: white;
+}
+
+#menu-left {
+    float: left;
+    width: 250px;
+}
+
+#menu-right {
+    float: right;
+    width: 50px;
 }
 
 /*===============
