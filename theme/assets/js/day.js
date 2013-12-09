@@ -50,9 +50,11 @@ $(document).ready(function() {
             
             // we need to copy it, so that multiple events don't have a reference to the same object
             var copiedEventObject = $.extend({}, originalEventObject);
+            var duration = 90;
             
             // assign it the date that was reported
             copiedEventObject.start = date;
+            copiedEventObject.end = new Date(date.getTime() + duration * 60000);
             copiedEventObject.allDay = allDay;
             
             // render the event on the calendar
@@ -74,9 +76,6 @@ $(document).ready(function() {
     var endYear = id.endD.substring(0,4);
     var endMonth = id.endD.substring(5,7);
     var endDay = id.endD.substring(8,10);
-    console.log(startYear);
-    console.log(startMonth);
-    console.log(startDay);
 
     $('#calendar').fullCalendar( 'gotoDate', startYear, startMonth-1, startDay);
     $('.fc-button-prev').hide();
@@ -86,8 +85,6 @@ $(document).ready(function() {
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var startDate = new Date(startYear,startMonth-1,startDay);
     var endDate = new Date(endYear,endMonth-1,endDay);
-    console.log(startDate);
-    console.log(endDate);
     var totalDays = Math.round(Math.abs((startDate.getTime() - endDate.getTime())/(oneDay)));
     totalDays++;
 
@@ -149,8 +146,6 @@ $(document).ready(function() {
                         var venue = reply[i].venue;
                         var venue_img = typeof venue.photos.groups[0] !== "undefined" ? venue.photos.groups[0].items[0].prefix + 
                         "300x300" + venue.photos.groups[0].items[0].suffix : "error.jpg";
-
-                        console.dir(venue_img);
 
                         //set variables
                         var venue_name = venue.name;
