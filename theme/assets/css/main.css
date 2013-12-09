@@ -94,7 +94,7 @@ a:after {
    ========================================================================== */
 
 #headerwrap {
-	background: url(../img/header-bg.jpg) no-repeat center top;
+	background: url(../img/header-bg-alt.jpg) no-repeat center top;
 	margin-top: -10px;
 	padding-top:20px;
 	text-align:center;
@@ -122,11 +122,13 @@ a:after {
 }
 
 #headerwrap h3 {
-	color: white;
+	color: #ddd;
 	font-size: 30px;
 	font-weight: 100;
-    font-family: 'EB Garamond', serif;
+    /*font-family: 'EB Garamond', serif;*/
+    font-family: 'Open Sans';
     font-style: oblique;
+    text-shadow: 1px 1px 3px black;
 }
 
 #headerwrap .logo {
@@ -139,7 +141,8 @@ a:after {
 /* Footer Wrap */
 
 #f {
-	background: #1a1a1a;
+	/*background: #1a1a1a;*/
+    background: #222;
 	padding-top: 70px;
 	padding-bottom: 70px;
 	text-align: center
@@ -191,6 +194,7 @@ a:after {
 	background: #1a1a1a;
 	width: 450px;
 	height: 100%;
+    box-shadow: 0 0 5px black;
 }
 
 .menu h1.logo a {

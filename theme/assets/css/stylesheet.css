@@ -5,7 +5,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans';
-    background: url('../img/bg.png');
+    background: url('../img/bg-light.jpg');
+    background-attachment:fixed;
 }
 header {
     height: 50px;
@@ -23,9 +24,11 @@ header {
 
 #header-content {
     width: 980px;
-    padding: 0 10px 40px;
+    padding: 0 10px;
     margin: 0 auto;
-    /*line-height: 50px;*/
+    line-height: 30px;
+    font-size: 24px;
+    color: #eee;
 }
 
 #header-content h1.logo a {
@@ -35,6 +38,13 @@ header {
     line-height: 50px;
     color: #ffffff;
     margin: 0 auto;
+}
+.logo {
+    display: inline-block;
+}
+#header-itinerary {
+    font-size: 20px;
+    font-family: 'Nixie One';
 }
 
 #header-content h1.logo a:hover {
@@ -110,13 +120,10 @@ p {
     background: #eee;
     box-shadow: 0 0 3px #333;
 }
-#location {
-    text-align: center;
-}
 #location input[type="text"] {
     outline: none;
     width: 400px;
-    height: 30px;
+    height: 25px;
     line-height: 25px;
     margin: 10px;
     padding: 10px 10px 10px 45px;
@@ -133,13 +140,13 @@ p {
 }
 #time {
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
 }
 #time input[type="text"] {
     outline: none;
     width: 150px;
-    height: 25px;
-    line-height: 25px;
+    height: 20px;
+    line-height: 20px;
     margin: 10px;
     padding: 5px 10px;
     border: 1px solid #999;
@@ -155,15 +162,16 @@ p {
 #add-button {
    /* display: block;
    */ width: 100px;
-    /*margin: 10px auto 0;
-    */padding: 5px;
+    margin: -1px auto 1px;
+    padding: 8px;
     border: 1px solid #1869A3;
     border-radius: 5px;
     background: #2B91D9;
-    height: 40px;
+    height: 25px;
+    line-height: 25px;
     color: white;
     font-family: 'Open Sans';
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /*===========
@@ -261,7 +269,7 @@ p {
 }
 
 #menu-bottom a {
-    /*display: inline;*/
+    display: inline;
     font-size: 15px;
 }
 
@@ -282,7 +290,7 @@ p {
     float: left;
     width: 430px;
 /*    min-height: 550px;
-*/    margin: 85px 10px;
+*/    margin: 70px 10px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
@@ -294,8 +302,8 @@ p {
 #main-right {
     float: right;
     width: 500px;
-    min-height: 550px;
-    margin: 85px 5px;
+    min-height: 530px;
+    margin: 70px 5px 20px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
@@ -303,13 +311,14 @@ p {
 }
 
 #search-form {
-    text-align: left;
+    text-align: center;
+    margin-top: 5px;
 }
 
 #search-form input[type="text"] {
     outline: none;
     width: 70%;
-    height: 30px;
+    height: 25px;
     line-height: 25px;
     margin: 0px;
     padding: 10px 10px 10px 45px;
@@ -328,7 +337,7 @@ p {
 #search-form button {
     width: 70px;
     margin: 2px;
-    padding: 0px;
+    padding: 3px;
     border: 1px solid #1869A3;
     border-radius: 5px;
     background: #2B91D9;
@@ -338,7 +347,34 @@ p {
     height: 30px;
 }
 #search-form button:hover {
-    box-shadow: 0 0 7px #2D97E3;
+    /*box-shadow: 0 0 7px #2D97E3;*/
+    cursor: pointer;
+    border: 1px solid #0C4D7A;
+    background: #1869A3;
+    color: white;
+}
+
+.loading {
+    display: block;
+    margin: 210px auto;
+}
+.message {
+    text-align: left;
+    margin: 170px auto;
+    margin-left: 75px;
+    color: #999;
+    font-size: 20px;
+    line-height: 175%;
+}
+.step {
+    font-family: 'Oswald';
+    color: #666;
+}
+.no-results {
+    text-align: center;
+    margin: 220px auto;
+    color: #999;
+    font-size: 20px;
 }
 
 
@@ -380,6 +416,14 @@ p {
     text-align: right;
 }
 
+
+.disabled {
+    opacity: 0.4;
+}
+.disabled:hover {
+    cursor: default;
+}
+
 /******** TEMPORARY **********/
 #test1, #test2 {
     padding: 10px;
@@ -396,4 +440,10 @@ p {
   ===============*/
 .clear {
     clear: both;
+}
+.centered {
+    text-align: center;
+}
+.bordered {
+    border: 1px solid #555;
 }

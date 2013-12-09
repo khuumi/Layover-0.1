@@ -17,7 +17,7 @@ $(document).ready(function() {
     var itID = getParameterByName('id');
     var id = store.get(itID);
 
-    $('#header-itinerary').html('<h3>' + id.city + ', ' + id.country + ' (' + id.startD + ' - ' + id.endD + ')</h3>');
+    $('#header-itinerary').html(id.city + ', ' + id.country + ' (' + id.startD + ' - ' + id.endD + ')');
 
 
     var itinerary = store.get(itID);
@@ -25,16 +25,23 @@ $(document).ready(function() {
     /* Fullcalender init */
     $('#calendar').fullCalendar({
         //header: false,
-        // header: {
-        //     left:   '',
-        //     center: 'title',
-        //     right:  ''
-        // },
+         header: {
+             left:   'prev',
+             center: '',
+             right:  'next'
+         },
         defaultView: 'agendaDay',
         allDaySlot: false,
         height: 530,
         editable: true,
         slotEventOverlap: false,
+
+        // eventClick: function(calEvent, jsEvent, view) {
+
+        //     $('#calendar').fullCalendar( 'removeEvents', calEvent.id );
+
+        // },
+
         droppable: true, // this allows things to be dropped onto the calendar !!!
         drop: function(date, allDay) { // this function is called when something is dropped
         
@@ -61,47 +68,57 @@ $(document).ready(function() {
         }
     });
 
-    /* Test event objects */
-    // var date = new Date();
-    // var d = date.getDate();
-    // var m = date.getMonth();
-    // var y = date.getFullYear();
-    // var test1 = {
-    //     id: 1,
-    //     title: 'Test Event 1',
-    //     start: new Date(y, m, d, 16, 0),
-    //     end: new Date(y, m, d, 17, 30),
-    //     allDay: false
-    // }
-    // var test2 = {
-    //     id: 2,
-    //     title: 'Test Event 2',
-    //     start: new Date(y, m, d, 9, 20),
-    //     end: new Date(y, m, d, 10, 55),
-    //     allDay: false
-    // }
+    var startYear = id.startD.substring(0,4);
+    var startMonth = id.startD.substring(5,7);
+    var startDay = id.startD.substring(8,10);
+    var endYear = id.endD.substring(0,4);
+    var endMonth = id.endD.substring(5,7);
+    var endDay = id.endD.substring(8,10);
+    console.log(startYear);
+    console.log(startMonth);
+    console.log(startDay);
 
-    // $('.event').each(function() {
-    //     var eventObject = {
-    //         title: $.trim($(this).text()) // use the element's text as the event title
-    //     };
-        
-    //     // store the Event Object in the DOM element so we can get to it later
-    //     $(this).data('eventObject', eventObject);
-        
-    //     // make the event draggable using jQuery UI
-    //     $(this).draggable({
-    //         zIndex: 999,
-    //         revert: true,      // will cause the event to go back to its
-    //         revertDuration: 0.5  //  original position after the drag
-    //     });
+    $('#calendar').fullCalendar( 'gotoDate', startYear, startMonth-1, startDay);
+    $('.fc-button-prev').hide();
 
-    // });
+    // Get number of days between two dates
+    // http://stackoverflow.com/a/2627493
+    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+    var startDate = new Date(startYear,startMonth-1,startDay);
+    var endDate = new Date(endYear,endMonth-1,endDay);
+    console.log(startDate);
+    console.log(endDate);
+    var totalDays = Math.round(Math.abs((startDate.getTime() - endDate.getTime())/(oneDay)));
+    totalDays++;
+
+    var currentDay = 1;
+
+    $('.fc-button-prev').click(function(e) {
+        if(currentDay == 2) {
+            $(this).hide();
+        }
+        $('.fc-button-next').show();
+        currentDay--;
+    });
+    $('.fc-button-next').click(function(e) {
+        if(currentDay == totalDays - 1) {
+            $(this).hide();
+        }
+        $('.fc-button-prev').show();
+        currentDay++;
+    });
+
+
+    $("#search-input").keyup(function(e){
+        if(e.keyCode == 13){
+            $("#search-button").click();
+        }
+    });
 
     $('#search-button').click(function() {
         //here the add button is called, I want to get the information
         //from the add button to create a new itinerary 
-        $('#result').html('');
+        $('#result').html('<img class="loading" src="assets/img/loading.gif">');
         var query = $("#search-input").val();
 
         var location = itinerary.city + ", " + itinerary.country;
@@ -117,40 +134,47 @@ $(document).ready(function() {
         console.dir('Requesting venues_explore for help');
         foursquare.explore_venue (
             { q: queryString, limit: 30}, function (reply) {
+                $('#result').html('');
                 console.dir("reply:");
                 console.dir(reply);
                 //var $result = $('<div id=\"result\"></div>')
                 var count = 1;
-                for (var i in reply) {
-                    var venue = "";
-                    console.dir(reply[i].venue);
-                    var venue = reply[i].venue;
-                    var venue_img = typeof venue.photos.groups[0] !== "undefined" ? venue.photos.groups[0].items[0].prefix + 
-                    "300x300" + venue.photos.groups[0].items[0].suffix : "error.jpg";
+                if(reply.length == 0) {
+                    $('#result').html('<div class="no-results">No results.</div>');
+                }
+                else {
+                    for (var i in reply) {
+                        var venue = "";
+                        console.dir(reply[i].venue);
+                        var venue = reply[i].venue;
+                        var venue_img = typeof venue.photos.groups[0] !== "undefined" ? venue.photos.groups[0].items[0].prefix + 
+                        "300x300" + venue.photos.groups[0].items[0].suffix : "error.jpg";
 
-                    console.dir(venue_img);
+                        console.dir(venue_img);
 
-                    //set variables
-                    var venue_name = venue.name;
-                    var venue_id = venue.id;
-                    var address = typeof venue.location.address !== "undefined" ? venue.location.address + "<br>" : "";
-                    address += typeof venue.location.crossStreet !== "undefined" ? " (" + venue.location.crossStreet + ")" : "";
+                        //set variables
+                        var venue_name = venue.name;
+                        var venue_id = venue.id;
+                        var address = typeof venue.location.address !== "undefined" ? venue.location.address + "<br>" : "";
+                        address += typeof venue.location.crossStreet !== "undefined" ? " (" + venue.location.crossStreet + ")" : "";
 
-                    var rating = typeof venue.rating !== "undefined" ? venue.rating : "N/A";
-                    var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
+                        var rating = typeof venue.rating !== "undefined" ? venue.rating : "N/A";
+                        var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
 
-                    var $row = $('<hr/><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
-                        '.</div><div class=\"list-middle\"><b>' + venue_name + '</b><br><small>' + address + category + 
-                        ' (rating: ' + rating + ')</small>' + '</div><div class=\"list-right\">' +
-                        '<img src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div></div>');
-                    $('#result').append($row);
-                    count += 1;
+                        var $row = $('<hr/><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
+                            '.</div><div class=\"list-middle\"><span class="venue-name"><b>' + venue_name + '</b></span><br><small>' + address + category + 
+                            ' (rating: ' + rating + ')</small>' + '</div><div class=\"list-right\">' +
+                            '<img class="bordered" src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div></div>');
+                        $('#result').append($row);
+                        count += 1;
+                    }
                 }
                 
 
                 $('.event').each(function() {
                     var eventObject = {
-                        title: $.trim($(this).text()) // use the element's text as the event title
+                        title: $.trim($(this).find('.venue-name').text()), // use the element's text as the event title
+                        id: $(this).attr('id')
                     };
                     
                     // store the Event Object in the DOM element so we can get to it later

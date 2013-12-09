@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Layover &#187; Day View</title>
+    <title>Layover</title>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="assets/ico/favicon.png">
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -19,7 +19,7 @@
     <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans|Nixie+One|Electrolize' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
 
@@ -28,20 +28,20 @@
 <body data-spy="scroll" data-offset="0" data-target="#theMenu">
     <header>
         <div id="header-content">
-            <h1 class="logo"><a href="./index.html">Layover</a></h1>
-            <div id="header-itinerary"></div>
+            <h1 class="logo"><a href="./index.html">Layover</a></h1> &#187; <span id="header-itinerary"></span>
         </div>
     </header>
 
     <nav class="menu" id="theMenu">
         <div class="menu-wrap">
-            <h1 class="logo"><a href="./index.html#home">Itineraries</a></h1>
+            <h1 class="logo"><a>Itineraries</a></h1>
             <div id="itineraries">
 
                <!--  <h2>My Itineraries</h2> -->
             </div>
             <div id="menu-bottom">
-                <a href="./index.html#about" class="smoothScroll"><b>About Us</b></a>
+                <a href="index.html" class="smoothScroll"><b>Home</b></a>
+                <a href="index.html#about" class="smoothScroll"><b>About Us</b></a>
             </div>
         </div>
         
@@ -58,20 +58,21 @@
         <div id="main-right">
             <div id="search-form">
                 <input type="text" id="search-input" placeholder="Search for a venue or category"/>
-                <button id="search-button" type="submit">Search</button>
+                <button id="search-button">Search</button>
             </div>
             <div id="result">
+                <div class="message"><span class="step">Step 1.</span> Search for venues.<br><span class="step">Step 2.</span> Drag them to the schedule.<br><span class="step">Step 3.</span> Edit the schedule as you see fit.
                 <!-- <div id="test1" class="event">Test Event 1</div>
                 <div id="test2" class="event">Test Event 2</div> -->
             </div>
         </div>
     </div>
 
-    <footer>
+    <!-- <footer>
         <hr/>
         COMS W4170 User Interface Design, Final Project
         <br/>Daniel Maxson, Siddharth Boobna, Martin Li, James Hong
-    </footer>
+    </footer> -->
 
 
 
@@ -87,7 +88,7 @@
     <script src="assets/js/mainmenu.js"></script>
 
     <!-- Fullcalendar -->
-    <script src="assets/js/fullcalendar.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
 
     <!-- Store.js -->
     <script src="assets/js/store+json2.min.js"></script>

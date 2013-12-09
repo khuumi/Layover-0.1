@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    init()
+    init();
     function init() {
         if (!store.enabled) {
             alert('Local storage is not supported by your browser. Please disabled "Private Mode", or upgrade to a modern browser')
@@ -27,7 +27,7 @@ $(document).ready(function() {
     });
 
 
-    $('#add-button').click(function() {
+    $('#add-button').unbind('click').click(function() {
         //here the add button is called, I want to get the information
         //from the add button to create a new itinerary 
 

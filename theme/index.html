@@ -29,7 +29,7 @@
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans|Nixie+One|Electrolize' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=EB+Garamond' rel='stylesheet' type='text/css'>
 	<script src="assets/js/main.js"></script>
@@ -46,13 +46,14 @@
 	<!-- Menu -->
 	<nav class="menu" id="theMenu">
 		<div class="menu-wrap">
-			<h1 class="logo"><a href="./index.html#home">Itineraries</a></h1>
+			<h1 class="logo"><a>Itineraries</a></h1>
 			<div id="itineraries">
 
                <!--  <h2>My Itineraries</h2> -->
   
         	</div>
         	<div id="menu-bottom">
+                <a href="index.html" class="smoothScroll"><b>Home</b></a>
                 <a href="#about" class="smoothScroll"><b>About Us</b></a>
             </div>
 			
@@ -77,14 +78,16 @@
 				<div class="col-lg-6 col-lg-offset-3">
 					<h1>Layover</h1>
 					<br>
-					<div id="location">
-	                	<h3>Add a new itinerary</h3>
-	                	<input type="text" autocomplete="on" id="location-input" placeholder="Where are you going?"/>
-	                	<button class="btn btn-success" id="add-button" >Add</button>
-	            	    <div class="input-daterange">
-	                        <input class="input-small" name="start"  id="start_date" placeholder="yyyy-mm-dd" />
+					<div class="centered">
+	                	<div id="location">
+                            <h3>Add a new itinerary &#187;</h3>
+    	                	<input type="text" autocomplete="on" id="location-input" placeholder="Where are you going?"/>
+    	                	<button class="btn btn-success" id="add-button" >Add</button>
+                        </div>
+	            	    <div class="input-daterange" id="time">
+	                        <input type="text" class="input-small" name="start"  id="start_date" placeholder="yyyy-mm-dd" />
 	                        <span class="add-on">to</span>
-	                        <input class="input-small" name="end" id = "end_date" placeholder="yyyy-mm-dd" />
+	                        <input type="text" class="input-small" name="end" id = "end_date" placeholder="yyyy-mm-dd" />
 	                   	</div>
 	                </div>
 
@@ -103,8 +106,7 @@
 				
 				<div class="col-lg-8 col-lg-offset-2">
 					<p><img src="http://placehold.it/600x400&text=team+photo"></p>
-					<p>This project is created in 2013 by <br>James Hong, Daniel Maxson, Siddharth Boobna, and Martin Li 
-						<br>for User Interface Design Final Project.</p>
+					<p>James Hong, Daniel Maxson, Siddharth Boobna, and Martin Li<br>COMS W4170 User Interface Design Final Project</p>
 				</div>								
 			</div>
 		</div>

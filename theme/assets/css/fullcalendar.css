@@ -115,10 +115,14 @@ html .fc,
 /* Cell Styles
 ------------------------------------------------------------------------*/
 
-.fc-widget-header,    /* <th>, usually */
-.fc-widget-content {  /* <td>, usually */
+.fc-widget-header {
 	border: 1px solid #ddd;
 	}
+
+.fc-widget-content {
+	border: 1px solid #ddd;
+	background: #fcf8e3;
+}
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
 	background: #fcf8e3;
