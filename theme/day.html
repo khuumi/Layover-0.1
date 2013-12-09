@@ -68,6 +68,8 @@
         </div>
     </div>
 
+    <div id="popup">stuff</div>
+
     <!-- <footer>
         <hr/>
         COMS W4170 User Interface Design, Final Project
@@ -89,6 +91,29 @@
 
     <!-- Fullcalendar -->
     <script src="assets/js/fullcalendar.js"></script>
+
+    <!-- Fancybox -->
+    <link rel="stylesheet" href="assets/js/fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen">
+
+    <script src="assets/js/fancybox/source/jquery.fancybox.pack.js?v=2.1.4"></script>
+
+    <script>
+        (function() {
+            $('.fancybox').fancybox({
+                padding: 20,
+                minWidth: 500,
+                maxWidth: 500,
+                helpers : {
+                    overlay : {
+                        css : {
+                            'background' : 'rgba(0,0,0,0.6)'
+                        },
+                        locked: false
+                    }
+                }
+            });
+        })();
+    </script>
 
     <!-- Store.js -->
     <script src="assets/js/store+json2.min.js"></script>

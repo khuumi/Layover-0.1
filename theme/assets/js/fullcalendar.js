@@ -748,7 +748,7 @@ function Header(calendar, options) {
 		if (sections) {
 			element = $("<table class='fc-header' style='width:100%'/>")
 				.append(
-					$("<tr/>")
+					$("<tr height='48px'/>")
 						.append(renderSection('left'))
 						.append(renderSection('center'))
 						.append(renderSection('right'))

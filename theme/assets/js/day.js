@@ -43,7 +43,7 @@ $(document).ready(function() {
         // },
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
-        drop: function(date, allDay) { // this function is called when something is dropped
+        drop: function(date, allDay, jsEvent, ui) { // this function is called when something is dropped
         
             // retrieve the dropped element's stored Event Object
             var originalEventObject = $(this).data('eventObject');
@@ -78,7 +78,6 @@ $(document).ready(function() {
     var endDay = id.endD.substring(8,10);
 
     $('#calendar').fullCalendar( 'gotoDate', startYear, startMonth-1, startDay);
-    $('.fc-button-prev').hide();
 
     // Get number of days between two dates
     // http://stackoverflow.com/a/2627493
@@ -89,6 +88,11 @@ $(document).ready(function() {
     totalDays++;
 
     var currentDay = 1;
+
+    $('.fc-button-prev').hide();
+    if(currentDay == totalDays) {
+        $('.fc-button-next').hide();
+    }
 
     $('.fc-button-prev').click(function(e) {
         if(currentDay == 2) {
@@ -156,10 +160,10 @@ $(document).ready(function() {
                         var rating = typeof venue.rating !== "undefined" ? venue.rating : "N/A";
                         var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
 
-                        var $row = $('<hr/><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
+                        var $row = $('<hr/><a class="fancybox" href="#popup"><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
                             '.</div><div class=\"list-middle\"><span class="venue-name"><b>' + venue_name + '</b></span><br><small>' + address + category + 
                             ' (rating: ' + rating + ')</small>' + '</div><div class=\"list-right\">' +
-                            '<img class="bordered" src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div></div>');
+                            '<img class="bordered" src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div><div class="extra-data">'+ venue_name +'</div></div></a>');
                         $('#result').append($row);
                         count += 1;
                     }
@@ -182,6 +186,12 @@ $(document).ready(function() {
                         revertDuration: 0.5  //  original position after the drag
                     });
 
+                });
+
+                $('.event').click(function() {
+                    var info = $(this).find('.extra-data').text();
+                    console.log(info);
+                    $('#popup').html(info);
                 });
             }
         );

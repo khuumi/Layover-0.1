@@ -49,8 +49,9 @@ $(document).ready(function() {
         var endDate = $("#end_date").val().split('-').join('/');;
 
         if (location == "" || startDate == "" || endDate == "") { //Validation
-            var err = ("The following fields must be filled:" + (location == "" ?"\n - Location":"") + (startDate == ""?"\n - Start Date":"") + (endDate == ""?"\n - End Date":""));
-            alert(err);
+            //var err = ("The following fields must be filled:" + (location == "" ?"\n - Location":"") + (startDate == ""?"\n - Start Date":"") + (endDate == ""?"\n - End Date":""));
+            //alert(err);
+            var n = noty({text: 'Please enter all the fields!!', layout:'center'});
             console.dir("printed error");
             return false;
         };
