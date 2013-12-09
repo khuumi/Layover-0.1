@@ -43,7 +43,7 @@ $(document).ready(function() {
         // },
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
-        drop: function(date, allDay) { // this function is called when something is dropped
+        drop: function(date, allDay, jsEvent, ui) { // this function is called when something is dropped
         
             // retrieve the dropped element's stored Event Object
             var originalEventObject = $(this).data('eventObject');
