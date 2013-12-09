@@ -26,6 +26,10 @@ $(document).ready(function() {
         // orientation: "bottom auto"	
     });
 
+    $('.input-daterange').datepicker().on('changeDate', function(){
+        $(this).blur();
+    }); 
+
 
     $('#add-button').unbind('click').click(function() {
         //here the add button is called, I want to get the information
