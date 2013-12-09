@@ -161,7 +161,7 @@ p {
 }
 #add-button {
    /* display: block;
-   */ width: 100px;
+   */ width: 90px;
     margin: -1px auto 1px;
     padding: 8px;
     border: 1px solid #1869A3;
@@ -336,7 +336,7 @@ p {
 
 #search-form button {
     width: 70px;
-    margin: 2px;
+    margin-left: 5px;
     padding: 3px;
     border: 1px solid #1869A3;
     border-radius: 5px;
@@ -344,7 +344,8 @@ p {
     color: white;
     font-family: 'Open Sans';
     font-size: 16px;
-    height: 30px;
+    height: 35px;
+    line-height: 35px;
 }
 #search-form button:hover {
     /*box-shadow: 0 0 7px #2D97E3;*/
@@ -388,7 +389,7 @@ p {
 }
 
 .list-left {
-    width:20px;
+    width:25px;
     padding:10px;
     margin-right: 10px;
     float: left;
@@ -417,12 +418,19 @@ p {
 }
 
 
-.disabled {
-    opacity: 0.4;
+.extra-data {
+    display: none;
 }
-.disabled:hover {
-    cursor: default;
+#popup {
+    display: none;
 }
+.fancybox {
+    color: #555;
+}
+.fancybox:hover {
+    color: #333;
+}
+
 
 /******** TEMPORARY **********/
 #test1, #test2 {
