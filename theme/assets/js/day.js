@@ -56,7 +56,7 @@ $(document).ready(function() {
             copiedEventObject.start = date;
             copiedEventObject.end = new Date(date.getTime() + duration * 60000);
             copiedEventObject.allDay = allDay;
-            
+
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
             $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
@@ -173,7 +173,7 @@ $(document).ready(function() {
                 $('.event').each(function() {
                     var eventObject = {
                         title: $.trim($(this).find('.venue-name').text()), // use the element's text as the event title
-                        id: $(this).attr('id')
+                        //id: $(this).attr('id')
                     };
                     
                     // store the Event Object in the DOM element so we can get to it later
