@@ -76,7 +76,6 @@ $(document).ready(function() {
     var endDay = id.endD.substring(8,10);
 
     $('#calendar').fullCalendar( 'gotoDate', startYear, startMonth-1, startDay);
-    $('.fc-button-prev').hide();
 
     // Get number of days between two dates
     // http://stackoverflow.com/a/2627493
@@ -89,6 +88,11 @@ $(document).ready(function() {
     totalDays++;
 
     var currentDay = 1;
+
+    $('.fc-button-prev').hide();
+    if(currentDay == totalDays) {
+        $('.fc-button-next').hide();
+    }
 
     $('.fc-button-prev').click(function(e) {
         if(currentDay == 2) {
