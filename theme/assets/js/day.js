@@ -367,16 +367,6 @@ $(document).ready(function() {
 
                     $('#popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
                     
-
-                        // var geoJson = [{
-                        //     type: 'Feature',
-                        //     "geometry": { "type": "Point", "coordinates": [lat, lng]},
-                        //     "properties": {
-                        //         "url": response.url,
-                        //         "marker-symbol": "star",
-                        //         "city": response.location.city + ', ' + response.location.state;
-                        //     },
-                        // }];
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
                     getVenueInfo(venue_id, function(response) {
@@ -434,11 +424,27 @@ $(document).ready(function() {
         var venue_categories = '';
         var i = 0;
         for (i=0; i<info.categories.length; i++) {
-            console.dir(info.categories[i].name);
             venue_categories = venue_categories + info.categories[i].name + (i !== info.categories.length - 1 ? ', ' : '');
         }
 
-        var str = venue_name + '<br>' + venue_categories;
+        // var icon = typeof info.categories[0] !== "undefined" ? info.categories[0].icon.prefix + info.categories[0].icon.suffix : "";
+
+        var address = typeof info.location.address !== "undefined" ? info.location.address : "";
+            address += typeof info.location.crossStreet !== "undefined" ? " (" + info.location.crossStreet + ")" : "";
+            address += typeof info.location.city !== "undefined" ? ", " + info.location.city : "";
+            address += typeof info.location.state !== "undefined" ? ", " + info.location.state : (typeof info.location.country !== "undefined" ? ", " + info.location.country : "");
+            address += typeof info.location.postalCode !== "undefined" ? " " + info.location.postalCode : "";
+
+        var phone = info.contact.formattedPhone;
+
+        var hours = info.hours.status;
+
+        var menus = typeof info.menu.url !== "undefined" ?'<a href=\"' + info.menu.url + '\" target=\"_blank\">view menus</a>' : "";
+
+
+
+
+        var str = venue_name + '<br>' + venue_categories + '<br>' + address + '<br><hr />' + phone + '<p>' + hours + ' ' + menus + '</p>';
 
         var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
@@ -449,7 +455,7 @@ $(document).ready(function() {
         var lng = response.location.lng;
         
         var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
-            maxZoom:15,
+            maxZoom:16,
             attributionControl:false
         }).setView([lat, lng], 14);
         L.mapbox.markerLayer({

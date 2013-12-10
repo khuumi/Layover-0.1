@@ -464,6 +464,12 @@ p {
     font-size: 20px;
 }
 
+.popup-left hr {
+    width: 480px;
+    color: #666;
+    text-align: left;
+}
+
 .popup-right {
     float: right;
     position: relative;
