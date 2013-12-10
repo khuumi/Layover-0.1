@@ -90,13 +90,6 @@ h2 {
     font-weight: bold;
 }
 
-p {
-    font-family: 'Oswald', sans-serif;
-    color: #eee;
-    text-shadow: 1px 1px 5px black;
-    line-height: 28px;
-    margin-bottom: 25px;
-}
 /*a:link, a:hover, a:visited, a:active {
     text-decoration: none;
     color: inherit; 
@@ -315,10 +308,10 @@ p {
 #main-right {
     float: right;
     width: 500px;
-    /*min-height: 530px;*/
-    overflow: auto;
+    min-height: 530px;
+    /*overflow: auto;
     height: auto;
-    bottom: 0;
+    bottom: 0;*/
     /*position: fixed;*/
     margin: 70px 5px 20px;
     padding: 10px;
@@ -334,7 +327,6 @@ p {
     height: 60px;
     margin-top: 5px;
     position: fixed;
-    z-index:1;
 }
 
 #search-form input[type="text"] {

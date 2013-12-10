@@ -7,6 +7,11 @@ foursquare.setVersionParameter("20131205");
 // var mapbox = new Mapbox;
 
 $(document).ready(function() {
+    var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+            maxZoom:16,
+            attributionControl:false
+        });
+
     init();
     function init() {
         if (!store.enabled) {
@@ -318,7 +323,6 @@ $(document).ready(function() {
                 $('#result').html('');
                 console.dir("reply:");
                 console.dir(reply);
-                //var $result = $('<div id=\"result\"></div>')
                 var count = 1;
                 if(reply.length == 0) {
                     $('#result').html('<div class="no-results">No results.</div>');
@@ -336,7 +340,12 @@ $(document).ready(function() {
                         var address = typeof venue.location.address !== "undefined" ? venue.location.address + "<br>" : "";
                         address += typeof venue.location.crossStreet !== "undefined" ? " (" + venue.location.crossStreet + ")" : "";
 
-                        var rating = typeof venue.rating !== "undefined" ? venue.rating : "N/A";
+                        // var rating = typeof venue.rating !== "undefined" ? venue.rating : "N/A";
+                        var rating = typeof venue.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
+                        'Rating: <span itemprop="ratingValue" style="display:none">' + (venue.rating) + '</span> <i class="icon-star"></i><i class="icon-star"></i>' +
+                        '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
+
+
                         var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
 
                         //var $detail = $();
@@ -344,12 +353,12 @@ $(document).ready(function() {
 
                         var $row = $('<hr/><a class="fancybox" href="#popup"><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
                             '.</div><div class=\"list-middle\"><span class="venue-name"><b>' + venue_name + '</b></span><br><small>' + address + category + 
-                            ' (rating: ' + rating + ')</small>' + '</div><div class=\"list-right\">' +
+                            '<p>' + rating + '</p></div><div class=\"list-right\">' +
                             '<img class="bordered" src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div>'+'</div></a>');
                         $('#result').append($row);
                         count += 1;
                     }
-                }
+                } // end if/else
 
                 $('.event').each(function() {
                     var eventObject = {
@@ -371,7 +380,7 @@ $(document).ready(function() {
                         revertDuration: 0.5  //  original position after the drag
                     });
 
-                });
+                }); // end even each function
 
                 $('.event').click(function() {
 
@@ -409,11 +418,11 @@ $(document).ready(function() {
                         // console.dir('info:');
                         // console.dir(response);
                         //$('#popup').html(response.contact.formattedPhone);
-                    });
-                });
+                    }); // end getVenueInfo function
+                }); //end event click function
             }
-        );
-    });
+        ); //end foursquare explore function
+    }); //end search function
 
 
     // Return venue information by calling get_venue function
@@ -425,9 +434,9 @@ $(document).ready(function() {
             var venue_info = parseInfo(response);
             $('#popup').html(venue_info);
             addMap(response);
-            return callback(response);
+            return callback(venue_info);
         });
-    }
+    } //end getVenueInfo
 
     function parseInfo(info) {
         var venue_name = '<span class="venue-name"><b>' + info.name + '</b></span>';
@@ -446,11 +455,11 @@ $(document).ready(function() {
 
         var phone = typeof info.contact !== "undefined" ? '<span class="glyphicon glyphicon-earphone"></span>' + info.contact.formattedPhone : "";
 
-        var url = typeof info.url !== "undefined" ? '<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>' : "";
+        var url = typeof info.url !== "undefined" ? ('<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>') : ('<a href=\"' + info.shortUrl + '\" target=\"_blank\">' + info.shortUrl + '</a>');
 
         var hours = typeof info.hours !== "undefined" ? info.hours.status : "";
 
-        var menus = typeof info.menu.url !== "undefined" ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : "";
+        var menus = typeof info.menu !== "undefined" ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : "";
 
         var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
@@ -460,16 +469,18 @@ $(document).ready(function() {
 
         var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
-    }
+    } //end parseInfo
 
     function addMap(response) {
         var lat = response.location.lat;
         var lng = response.location.lng;
         
-        var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+        map.remove();
+        map = L.mapbox.map('map', 'jameshong.ggk4nail', {
             maxZoom:16,
             attributionControl:false
         }).setView([lat, lng], 15);
+
         L.mapbox.markerLayer({
             type: 'Feature',
             geometry: {
@@ -484,7 +495,7 @@ $(document).ready(function() {
                 'marker-symbol': 'circle-stroked'
             }
         }).addTo(map);
-    }
+    } //end addMap
 });
 
 // Get query parameters
