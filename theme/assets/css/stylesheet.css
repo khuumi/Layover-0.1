@@ -509,6 +509,15 @@ html, body {
 }
 
 
+#popup a {
+    color: #4BA5CC;
+}
+#popup a:hover {
+    color: #1D4C7A;
+    text-decoration: underline;
+}
+
+
 /******** TEMPORARY **********/
 #test1, #test2 {
     padding: 10px;
@@ -538,15 +547,33 @@ html, body {
 }
 
 
+.delete-event {
+    font-size: 12px;
+    border: 1px solid #444;
+    background: #eee;
+    font-family: 'helvetica';
+    border-radius: 5px;
+    padding: 5px;
+    width: 100px;
+    color: #444;
+    display: block;
+    margin: 0 auto;
+}
+.delete-event:hover {
+    background: #ccc;
+}
+
+
 /* confirmation buttons */
 .confirm-btn {
-    font-size: 14px;
+    font-size: 12px;
     border: 1px solid #444;
     background: #eee;
     font-family: 'helvetica';
     border-radius: 5px;
     width: 50px;
     color: #444;
+    padding: 3px;
 }
 .confirm-btn:hover {
     background: #ccc;
