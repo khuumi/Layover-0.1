@@ -215,6 +215,17 @@ $(document).ready(function() {
                 $('.event').click(function() {
 
                     $('#popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
+                    
+
+                        // var geoJson = [{
+                        //     type: 'Feature',
+                        //     "geometry": { "type": "Point", "coordinates": [lat, lng]},
+                        //     "properties": {
+                        //         "url": response.url,
+                        //         "marker-symbol": "star",
+                        //         "city": response.location.city + ', ' + response.location.state;
+                        //     },
+                        // }];
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
                     getVenueInfo(venue_id, function(response) {
@@ -224,18 +235,24 @@ $(document).ready(function() {
                         $('#popup').html(venue_info);
                         var lat = response.location.lat;
                         var lng = response.location.lng;
-                        var map = L.mapbox.map('map', 'jameshong.ggk4nail').setView([lat, lng], 14);
+                        
+                        // map.markerLayer.setGeoJSON(geoJson);
+                        var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+                            maxZoom:15,
+                            attributionControl:false
+                        }).setView([lat, lng], 14);
                         L.mapbox.markerLayer({
                             type: 'Feature',
                             geometry: {
                                 type: 'Point',
-                                coordinates: [lat, lng]
+                                coordinates: [lng, lat]
                             },
                             properties: {
                                 title: response.name,
                                 description: '',
                                 'marker-size': 'large',
-                                'marker-color': '#5E9DC8'
+                                'marker-color': '#5E9DC8',
+                                'marker-symbol': 'circle'
                             }
                         }).addTo(map);
                         // console.dir('info:');
