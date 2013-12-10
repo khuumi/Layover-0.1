@@ -70,22 +70,11 @@ $(document).ready(function() {
             var venue_id = calEvent.venueID;
             console.log(calEvent);
 
-            getVenueInfo(venue_id);
-            // console.dir('info:');
-                // console.dir(response);
-                // console.dir('info:');
-                // console.dir(response);
-                //var venue_info = parseInfo(response);
-                //$('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
-                //addMap(response);
+            getVenueInfo(venue_id, function(response) {
+                $('<button class="delete-event" id="'+ event_id +'">Delete</button>').appendTo('#delete_div');
+                addMap(response);
 
-            $('.delete-event').click(function() {
-                // var r = confirm('Are you sure you want to remove this event from your schedule?');
-                // if (r == true) {
-                //     var eid = $(this).attr('id');
-                //     $('#calendar').fullCalendar( 'removeEvents', eid );
-                //     $.fancybox.close();
-                // }
+                $('.delete-event').click(function() {
                 var eid = $(this).attr('id');
                 var r = noty({
                     text: 'Are you sure you want to delete this itinerary?',
@@ -107,6 +96,20 @@ $(document).ready(function() {
             });
 
             $('#popup-link').trigger('click');
+            });
+            // console.dir('info:');
+                // console.dir(response);
+                // console.dir('info:');
+                // console.dir(response);
+                //var venue_info = parseInfo(response);
+                //$('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+                //addMap(response);
+            // addDeleteButton(event);
+            // $('<button class="delete-event" id="'+ event_id +'">Delete</button>').appendTo('#popup');
+            // $('#delete_div').innerHTML = button_str;
+            // console.dir(button_str);
+
+            
 
         },
 
@@ -296,7 +299,11 @@ $(document).ready(function() {
                     $(this).draggable({
                         zIndex: 999,
                         revert: true,        // will cause the event to go back to its
-                        revertDuration: 0.5  //  original position after the drag
+                        revertDuration: 0.5,  //  original position after the drag
+                        helper: 'clone',
+                        start: function(e,ui) {
+                            $(ui.helper).addClass('ui-draggable-helper')
+                        }
                     });
 
                 }); // end even each function
@@ -307,23 +314,25 @@ $(document).ready(function() {
                     
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
-                    getVenueInfo(venue_id); // end getVenueInfo function
+                    getVenueInfo(venue_id, function(reply){
+
+                    }); // end getVenueInfo function
                 }); //end event click function
             }
         ); //end foursquare explore function
     }); //end search function
 
-
     // Return venue information by calling get_venue function
-    function getVenueInfo(venue_id) {
-        var url = '';
+    function getVenueInfo(venue_id, callback) {
         foursquare.get_venue ({q: venue_id}, function(response) {
             console.dir('venue info:');
             console.dir(response);
             var venue_info = parseInfo(response);
             $('#popup').html(venue_info);
             addMap(response);
+            return callback(response);
         });
+        
     } //end getVenueInfo
 
     function parseInfo(info) {
@@ -361,7 +370,7 @@ $(document).ready(function() {
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
-        var str = venue_name + '<div class = "delete-div"></div><br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
+        var str = venue_name + '<div id = "delete_div"></div><br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
         var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
