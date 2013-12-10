@@ -31,15 +31,16 @@ $(document).ready(function() {
 
 
 
-    console.log(itinerary.events);
+    //console.log(itinerary.events);
 
     function get_calendar_height() {
-        console.log($('#main-left').height());
         return $('#main-left').height();
     }
-    $(window).resize(function() {
-        $('#calendar').fullCalendar('option', 'height', get_calendar_height());
-    });
+
+    // dynamic calendar resize -- messes up resizing events for some reason
+    // $(window).resize(function() {
+    //     $('#calendar').fullCalendar('option', 'height', get_calendar_height());
+    // });
 
     /* Fullcalender init */
     $('#calendar').fullCalendar({
@@ -52,8 +53,8 @@ $(document).ready(function() {
         defaultView: 'agendaDay',
         events: itinerary.events, 
         allDaySlot: false,
-        height: get_calendar_height(),
         editable: true,
+        height: get_calendar_height(),
         slotEventOverlap: false,
 
         eventClick: function(calEvent, jsEvent, view) {
@@ -64,6 +65,7 @@ $(document).ready(function() {
             $('#calendar-popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
             var event_id = calEvent._id;
             var venue_id = calEvent.venueID;
+            console.log(calEvent);
 
             getVenueInfo(venue_id, function(response) {
 
@@ -98,7 +100,7 @@ $(document).ready(function() {
             for (var i in itObj.events){
 
 
-                if(itObj.events[i].id == event.id)
+                if(itObj.events[i]._id == event._id)
                 {
 
 
@@ -118,7 +120,7 @@ $(document).ready(function() {
                     console.log(newEnd);
                         console.log("hello");
 
-                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
+                    var myEvent = { id: event._id, title: event.title, start: event.start, end: newEnd, allDay: false};
 
                     // itObj.events[i].end = event.end.toUTCString();
                     // itObj.events[i].start = event.start.toUTCString();
@@ -149,7 +151,7 @@ $(document).ready(function() {
             for (var i in itObj.events){
 
 
-                if(itObj.events[i].id == event.id)
+                if(itObj.events[i]._id == event._id)
                 {
 
 
@@ -169,7 +171,7 @@ $(document).ready(function() {
                     console.log(newEnd);
                         console.log("hello");
 
-                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
+                    var myEvent = { id: event._id, title: event.title, start: event.start, end: newEnd, allDay: false};
 
                     // itObj.events[i].end = event.end.toUTCString();
                     // itObj.events[i].start = event.start.toUTCString();
@@ -214,7 +216,7 @@ $(document).ready(function() {
 
 
             //The event object that will get populated to our array
-            var myEvent = { id: eventObject.venueID, title: eventObject.title, start: copiedEventObject.start.toUTCString(), end: copiedEventObject.end.toUTCString(), allDay: false};
+            var myEvent = { _id: eventObject._id, venueID: eventObject.venueID, title: eventObject.title, start: copiedEventObject.start.toUTCString(), end: copiedEventObject.end.toUTCString(), allDay: false};
 
             console.log(myEvent);
             // console.dir(myEvent);
@@ -391,14 +393,6 @@ $(document).ready(function() {
         );
     });
 
-
-    $('#placeholder').click(function() {
-        getVenueInfo(venue_id, function(response) {
-            console.dir('venue info:');
-            console.dir(response);
-            $('#popup').html(response.contact.formattedPhone);
-        });
-    });
 
     // Return venue information by calling get_venue function
     function getVenueInfo(venue_id, callback) {
