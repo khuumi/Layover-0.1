@@ -65,19 +65,20 @@ $(document).ready(function() {
             // console.log(calEvent._id);
             // console.log(calEvent.venueID);
 
-            $('#calendar-popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
+            $('#popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
             var event_id = calEvent._id;
             var venue_id = calEvent.venueID;
             console.log(calEvent);
 
             getVenueInfo(venue_id, function(response) {
 
+            });
+            // console.dir('info:');
+                // console.dir(response);
                 // console.dir('info:');
                 // console.dir(response);
-                console.dir('venue info:');
-                console.dir(response);
-                var venue_info = parseInfo(response);
-                $('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+                //var venue_info = parseInfo(response);
+                //$('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
                 //addMap(response);
 
                 $('.delete-event').click(function() {
@@ -106,9 +107,8 @@ $(document).ready(function() {
                         killer: true
                     });
                 });
-            });
 
-            $('#calendar-popup-link').trigger('click');
+            $('#popup-link').trigger('click');
 
         },
 
@@ -360,6 +360,8 @@ $(document).ready(function() {
     } //end getVenueInfo
 
     function parseInfo(info) {
+        console.dir('venue information:');
+        console.dir(info);
         var venue_name = '<span class="venue-name"><b>' + info.name + '</b></span>';
         var venue_categories = '';
         var i = 0;
@@ -378,19 +380,21 @@ $(document).ready(function() {
             address += typeof info.location.postalCode !== undefined ? " " + info.location.postalCode : "";
         }
 
-        var phone = typeof info.contact !== undefined ? '<span class="glyphicon glyphicon-earphone"></span>' + info.contact.formattedPhone : "";
+        var phone = typeof info.contact !== undefined ? '<span class="glyphicon glyphicon-earphone"></span> ' + info.contact.formattedPhone : "";
 
-        var url = typeof info.url !== undefined ? ('<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>') : ('<a href=\"' + info.shortUrl + '\" target=\"_blank\">' + info.shortUrl + '</a>');
+        var url = typeof info.url !== undefined ? ('<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>') : 
+            (typeof info.shortUrl !== undefined ? ('<a href=\"' + info.shortUrl + '\" target=\"_blank\">' + info.shortUrl + '</a>') : "");
+            console.dir(info.shortUrl);
 
-        var hours = typeof info.hours !== undefined ? info.hours.status : "";
+        var hours = (typeof info.hours !== undefined && typeof info.hours.status !== undefined) ? info.hours.status : '';
 
-        var menus = typeof info.menu !== undefined ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : "";
+        var menus = typeof info.menu !== undefined ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : '';
 
         var rating = typeof info.rating !== undefined ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
-        var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + ' ' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
+        var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
         var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
