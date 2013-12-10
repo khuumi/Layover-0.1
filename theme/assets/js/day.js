@@ -218,10 +218,29 @@ $(document).ready(function() {
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
                     getVenueInfo(venue_id, function(response) {
-
+                        console.dir('venue info:');
+                        console.dir(response);
+                        var venue_info = parseInfo(response);
+                        $('#popup').html(venue_info);
+                        var lat = response.location.lat;
+                        var lng = response.location.lng;
+                        var map = L.mapbox.map('map', 'jameshong.ggk4nail').setView([lat, lng], 14);
+                        L.mapbox.markerLayer({
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [lat, lng]
+                            },
+                            properties: {
+                                title: response.name,
+                                description: '',
+                                'marker-size': 'large',
+                                'marker-color': '#5E9DC8'
+                            }
+                        }).addTo(map);
                         // console.dir('info:');
                         // console.dir(response);
-                        $('#popup').html(response.contact.formattedPhone);
+                        //$('#popup').html(response.contact.formattedPhone);
                     });
                 });
             }
