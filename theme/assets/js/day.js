@@ -70,7 +70,7 @@ $(document).ready(function() {
             console.log(calEvent);
 
             getVenueInfo(venue_id, function(reply) {
-                $('<button class="delete-event" id="'+ event_id +'">Delete</button>').appendTo('#delete_div');
+                $('<button class="delete-event" id="'+ event_id +'">Remove Event</button>').appendTo('#delete_div');
                 addMap(reply);
 
                 $('.delete-event').click(function() {
@@ -347,10 +347,10 @@ $(document).ready(function() {
 
         var hours = typeof info.hours !== "undefined" ? (typeof info.hours.status !== "undefined" ? info.hours.status : '') : '';
 
-        var menus = typeof info.menu !== "undefined" ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : '';
+        var menus = typeof info.menu !== "undefined" ? '| <a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : '';
 
         var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
-        '<span itemprop="ratingValue">' + (info.rating/2.0) + '</span> /5 <i class="icon-star"></i><i class="icon-star"></i>' +
+        '<span itemprop="ratingValue">' + (info.rating/2.0) + '</span> / 5 <i class="icon-star"></i><i class="icon-star"></i>' +
         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
         var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
