@@ -67,7 +67,7 @@ $(document).ready(function() {
             var venue_id = calEvent.venueID;
             console.log(calEvent);
 
-            getVenueInfo(venue_id, function(response) {
+            getVenueInfo(venue_imgid, function(response) {
 
                 // console.dir('info:');
                 // console.dir(response);
@@ -99,13 +99,13 @@ $(document).ready(function() {
 
             for (var i in itObj.events){
 
-
-                if(itObj.events[i].id == event.id)
+                console.log(event._id);
+                if(itObj.events[i]._id == event._id)
                 {
 
-
-                    var end = new Date(itObj.events[i].end);
+                    end = new Date(itObj.events[i].end);
                    // end.setMinutes(end.getMinutes() + minuteDelta);
+                   // start = new Date(itObj.events[i].end);
 
                     curMin = end.getMinutes();
 
@@ -117,10 +117,13 @@ $(document).ready(function() {
                     end.setMinutes(minuteDelta + curMin);
 
                     newEnd = end.toUTCString();
+                    newStart = start.toUTCString();
                     console.log(newEnd);
                         console.log("hello");
 
-                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
+                    console.log(event.start + "\t" +newEnd);
+
+                    var myEvent = { venueID: event.venueID, title: event.title, start: newStart, end: newEnd, allDay: false};
 
                     // itObj.events[i].end = event.end.toUTCString();
                     // itObj.events[i].start = event.start.toUTCString();
@@ -152,11 +155,11 @@ $(document).ready(function() {
             for (var i in itObj.events){
 
 
-                if(itObj.events[i].id == event.id)
+                if(itObj.events[i]._id == event._id)
                 {
 
-
                     var end = new Date(itObj.events[i].end);
+                  //  var start = new Date(itObj.events[i].end);
                    // end.setMinutes(end.getMinutes() + minuteDelta);
 
                     curMin = end.getMinutes();
@@ -166,13 +169,14 @@ $(document).ready(function() {
 
                     console.log("minuteDelta  = " +minuteDelta);
                     
-                    end.setMinutes(minuteDelta + curMin);
+                     end.setMinutes(minuteDelta + curMin);
 
                     newEnd = end.toUTCString();
+                    newStart = start.toUTCString();
                     console.log(newEnd);
                     console.log("hello");
 
-                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
+                    var myEvent = { venueID: event.venueID, title: event.title, start: newStart, end: newEnd, allDay: false};
 
                     // itObj.events[i].end = event.end.toUTCString();
                     // itObj.events[i].start = event.start.toUTCString();
@@ -196,6 +200,7 @@ $(document).ready(function() {
             // retrieve the dropped element's stored Event Object
             var originalEventObject = $(this).data('eventObject');
 
+            console.log(originalEventObject);
             //console.log($(this).data('eventObject'));
             
             // we need to copy it, so that multiple events don't have a reference to the same object
@@ -213,11 +218,18 @@ $(document).ready(function() {
             
             var eventObject = $(this).data('eventObject');
 
-            console.log(date.toUTCString());
 
+            console.log(copiedEventObject);
+
+            console.log("Newly added start and end date");
+            console.log(copiedEventObject.start.toUTCString());
+            console.log(copiedEventObject.end.toUTCString());
+
+           // console.log(eventObject._id);
 
             //The event object that will get populated to our array
-            var myEvent = { _id: eventObject._id, venueID: eventObject.venueID, title: eventObject.title, start: copiedEventObject.start.toUTCString(), end: copiedEventObject.end.toUTCString(), allDay: false};
+            var myEvent = { venueID: eventObject.venueID, title: eventObject.title, start: copiedEventObject.start.toUTCString(), end: copiedEventObject.end.toUTCString(), allDay: false};
+
 
             console.log(myEvent);
             // console.dir(myEvent);
