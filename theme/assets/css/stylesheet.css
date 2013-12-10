@@ -301,8 +301,10 @@ p {
 #main-left {
     float: left;
     width: 430px;
-/*    min-height: 550px;
-*/    margin: 70px 10px;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    margin: 70px 10px 20px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
@@ -471,4 +473,8 @@ p {
 }
 .bordered {
     border: 1px solid #555;
+}
+.popup-loading {
+    margin-top: 135px;
+    text-align: center;
 }

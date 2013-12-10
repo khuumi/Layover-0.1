@@ -22,6 +22,14 @@ $(document).ready(function() {
 
     var itinerary = store.get(itID);
 
+    function get_calendar_height() {
+        console.log($('#main-left').height());
+        return $('#main-left').height();
+    }
+    $(window).resize(function() {
+        $('#calendar').fullCalendar('option', 'height', get_calendar_height());
+    });
+
     /* Fullcalender init */
     $('#calendar').fullCalendar({
         //header: false,
@@ -32,17 +40,33 @@ $(document).ready(function() {
          },
         defaultView: 'agendaDay',
         allDaySlot: false,
-        height: 530,
+        height: get_calendar_height(),
         editable: true,
         slotEventOverlap: false,
 
         eventClick: function(calEvent, jsEvent, view) {
 
-            console.log(calEvent._id);
-            console.log(calEvent.venueID);
-            // $('#calendar-popup').data('eventID',calEvent.id);
-            // console.log($('#calendar-popup').data('eventID'));
-            // $('#calendar-popup-link').trigger('click');
+            // console.log(calEvent._id);
+            // console.log(calEvent.venueID);
+
+            $('#calendar-popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
+            var event_id = calEvent._id;
+            var venue_id = calEvent.venueID;
+
+            getVenueInfo(venue_id, function(response) {
+
+                // console.dir('info:');
+                // console.dir(response);
+                $('#calendar-popup').html(response.contact.formattedPhone + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+
+                $('.delete-event').click(function() {
+                    var eid = $(this).attr('id');
+                    $('#calendar').fullCalendar( 'removeEvents', eid );
+                    $.fancybox.close();
+                });
+            });
+
+            $('#calendar-popup-link').trigger('click');
 
         },
 
@@ -187,26 +211,18 @@ $(document).ready(function() {
                 });
 
                 $('.event').click(function() {
-                    console.dir('in event')
+                    $('#popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
+                    venue_id = $(this).attr('id');
+                    console.log(venue_id);
                     getVenueInfo(venue_id, function(response) {
 
-                        console.dir('info:');
-                        console.dir(response);
+                        // console.dir('info:');
+                        // console.dir(response);
                         $('#popup').html(response.contact.formattedPhone);
                     });
                 });
             }
         );
-    });
-
-    $('#placeholder').click(function() {
-        console.dir('in event')
-        getVenueInfo(venue_id, function(response) {
-
-            console.dir('info:');
-            console.dir(response);
-            $('#popup').html(response.contact.formattedPhone);
-        });
     });
 
     // Return venue information by calling get_venue function
