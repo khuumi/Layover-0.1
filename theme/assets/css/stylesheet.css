@@ -425,7 +425,7 @@ p {
 }
 
 .list-middle small {
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .list-right {
@@ -462,6 +462,10 @@ p {
 .popup-left b {
     color: #2fa4e7;
     font-size: 20px;
+}
+
+.popup-left small {
+    font-size: 12px;
 }
 
 .popup-left hr {
