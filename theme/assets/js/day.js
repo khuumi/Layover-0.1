@@ -72,9 +72,12 @@ $(document).ready(function() {
                 $('#calendar-popup').html(response.contact.formattedPhone + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
 
                 $('.delete-event').click(function() {
-                    var eid = $(this).attr('id');
-                    $('#calendar').fullCalendar( 'removeEvents', eid );
-                    $.fancybox.close();
+                    var r = confirm('Are you sure you want to remove this event from your schedule?');
+                    if (r == true) {
+                        var eid = $(this).attr('id');
+                        $('#calendar').fullCalendar( 'removeEvents', eid );
+                        $.fancybox.close();
+                    }
                 });
             });
 
