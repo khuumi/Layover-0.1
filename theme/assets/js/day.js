@@ -444,7 +444,7 @@ $(document).ready(function() {
             address += typeof info.location.state !== "undefined" ? ", " + info.location.state : (typeof info.location.country !== "undefined" ? ", " + info.location.country : "");
             address += typeof info.location.postalCode !== "undefined" ? " " + info.location.postalCode : "";
 
-        var phone = typeof info.contact !== "undefined" ? info.contact.formattedPhone : "";
+        var phone = typeof info.contact !== "undefined" ? '<span class="glyphicon glyphicon-earphone"></span>' + info.contact.formattedPhone : "";
 
         var url = typeof info.url !== "undefined" ? '<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>' : "";
 
