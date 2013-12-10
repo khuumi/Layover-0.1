@@ -1,8 +1,10 @@
 var foursquare = new Foursquare;
- foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
+foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
 //foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
 foursquare.setURL("https://api.foursquare.com/v2/");
 foursquare.setVersionParameter("20131205");
+
+// var mapbox = new Mapbox;
 
 $(document).ready(function() {
     init();
@@ -30,6 +32,13 @@ $(document).ready(function() {
 
 
     console.log(itinerary.events);
+    function get_calendar_height() {
+        console.log($('#main-left').height());
+        return $('#main-left').height();
+    }
+    $(window).resize(function() {
+        $('#calendar').fullCalendar('option', 'height', get_calendar_height());
+    });
 
     /* Fullcalender init */
     $('#calendar').fullCalendar({
@@ -42,17 +51,33 @@ $(document).ready(function() {
         defaultView: 'agendaDay',
         events: itinerary.events, 
         allDaySlot: false,
-        height: 530,
+        height: get_calendar_height(),
         editable: true,
         slotEventOverlap: false,
 
         eventClick: function(calEvent, jsEvent, view) {
 
-            console.log(calEvent._id);
-            console.log(calEvent.venueID);
-            // $('#calendar-popup').data('eventID',calEvent.id);
-            // console.log($('#calendar-popup').data('eventID'));
-            // $('#calendar-popup-link').trigger('click');
+            // console.log(calEvent._id);
+            // console.log(calEvent.venueID);
+
+            $('#calendar-popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
+            var event_id = calEvent._id;
+            var venue_id = calEvent.venueID;
+
+            getVenueInfo(venue_id, function(response) {
+
+                // console.dir('info:');
+                // console.dir(response);
+                $('#calendar-popup').html(response.contact.formattedPhone + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+
+                $('.delete-event').click(function() {
+                    var eid = $(this).attr('id');
+                    $('#calendar').fullCalendar( 'removeEvents', eid );
+                    $.fancybox.close();
+                });
+            });
+
+            $('#calendar-popup-link').trigger('click');
 
         },
 
@@ -329,23 +354,44 @@ $(document).ready(function() {
                 });
 
                 $('.event').click(function() {
-                    console.dir('in event')
-                    getVenueInfo(venue_id, function(response) {
 
-                        console.dir('info:');
+                    $('#popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
+                    venue_id = $(this).attr('id');
+                    console.log(venue_id);
+                    getVenueInfo(venue_id, function(response) {
+                        console.dir('venue info:');
                         console.dir(response);
-                        $('#popup').html(response.contact.formattedPhone);
+                        var venue_info = parseInfo(response);
+                        $('#popup').html(venue_info);
+                        var lat = response.location.lat;
+                        var lng = response.location.lng;
+                        var map = L.mapbox.map('map', 'jameshong.ggk4nail').setView([lat, lng], 14);
+                        L.mapbox.markerLayer({
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [lat, lng]
+                            },
+                            properties: {
+                                title: response.name,
+                                description: '',
+                                'marker-size': 'large',
+                                'marker-color': '#5E9DC8'
+                            }
+                        }).addTo(map);
+                        // console.dir('info:');
+                        // console.dir(response);
+                        //$('#popup').html(response.contact.formattedPhone);
                     });
                 });
             }
         );
     });
 
-    $('#placeholder').click(function() {
-        console.dir('in event')
-        getVenueInfo(venue_id, function(response) {
 
-            console.dir('info:');
+    $('#placeholder').click(function() {
+        getVenueInfo(venue_id, function(response) {
+            console.dir('venue info:');
             console.dir(response);
             $('#popup').html(response.contact.formattedPhone);
         });
@@ -354,10 +400,14 @@ $(document).ready(function() {
     // Return venue information by calling get_venue function
     function getVenueInfo(venue_id, callback) {
         var url = '';
-        foursquare.get_venue (
-            {q: venue_id}, function(response) {
-                return callback(response);
-            });
+        foursquare.get_venue ({q: venue_id}, function(response) {
+            return callback(response);
+        });
+    }
+
+    function parseInfo(info) {
+        var output = '<div class="popup-left"></div><div class="popup-right"><div id="map" class="map"></div></div>';
+        return output;
     }
 });
 

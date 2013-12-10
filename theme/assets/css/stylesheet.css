@@ -301,8 +301,10 @@ p {
 #main-left {
     float: left;
     width: 430px;
-/*    min-height: 550px;
-*/    margin: 70px 10px;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    margin: 70px 10px 20px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
@@ -402,7 +404,8 @@ p {
 
 .list-left {
     width:25px;
-    padding:10px;
+    padding-top: 10px;
+    padding-left: 5px;
     margin-right: 10px;
     float: left;
     font-size: 15px;
@@ -410,7 +413,9 @@ p {
 
 .list-middle {
    /* width:320px;
-   */ padding:5px;
+   */
+    padding:5px;
+    margin-left: -5px;
     float:left;
 }
 
@@ -434,6 +439,7 @@ p {
     display: none;
 }
 #popup {
+    /*margin: 0 auto;*/
     display: none;
 }
 .fancybox {
@@ -447,6 +453,28 @@ p {
     display: none;
 }
 
+.popup-left {
+    float: left;
+    width: 500px;
+    height: 400px;
+}
+
+.popup-right {
+    float: right;
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.popup-right .map {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+}
 
 
 /******** TEMPORARY **********/
@@ -471,4 +499,8 @@ p {
 }
 .bordered {
     border: 1px solid #555;
+}
+.popup-loading {
+    margin-top: 135px;
+    text-align: center;
 }
