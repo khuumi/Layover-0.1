@@ -441,10 +441,12 @@ $(document).ready(function() {
 
         var menus = typeof info.menu.url !== "undefined" ?'<a href=\"' + info.menu.url + '\" target=\"_blank\">view menus</a>' : "";
 
+        var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
+        '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
+        '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
 
-
-        var str = venue_name + '<br>' + venue_categories + '<br>' + address + '<br><hr />' + phone + '<p>' + hours + ' ' + menus + '</p>';
+        var str = venue_name + '<br>' + venue_categories + '<br>' + address + '<br><hr />' + phone + '<p>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
         var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
