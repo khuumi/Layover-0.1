@@ -121,7 +121,7 @@ html .fc,
 
 .fc-widget-content {
 	border: 1px solid #ddd;
-	background: #fcf8e3;
+	background: #fff8ed;
 }
 	
 .fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */

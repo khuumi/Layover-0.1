@@ -107,7 +107,6 @@ $(document).ready(function() {
         currentDay++;
     });
 
-
     $("#search-input").keyup(function(e){
         if(e.keyCode == 13){
             $("#search-button").click();
@@ -198,9 +197,7 @@ $(document).ready(function() {
                 });
             }
         );
-
     });
-
 
     $('#placeholder').click(function() {
         console.dir('in event')
