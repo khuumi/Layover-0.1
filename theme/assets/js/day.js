@@ -104,7 +104,7 @@ $(document).ready(function() {
             for (var i in itObj.events){
 
 
-                if(itObj.events[i]._id == event._id)
+                if(itObj.events[i].id == event.id)
                 {
 
 
@@ -124,7 +124,7 @@ $(document).ready(function() {
                     console.log(newEnd);
                         console.log("hello");
 
-                    var myEvent = { id: event._id, title: event.title, start: event.start, end: newEnd, allDay: false};
+                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
 
                     // itObj.events[i].end = event.end.toUTCString();
                     // itObj.events[i].start = event.start.toUTCString();
@@ -148,6 +148,7 @@ $(document).ready(function() {
 
             //weird bug whenever I try to change an event that I made this session. 
 
+
             var itObj = store.get(itID);
             console.log(itObj);
 
@@ -155,7 +156,7 @@ $(document).ready(function() {
             for (var i in itObj.events){
 
 
-                if(itObj.events[i]._id == event._id)
+                if(itObj.events[i].id == event.id)
                 {
 
 
@@ -173,9 +174,9 @@ $(document).ready(function() {
 
                     newEnd = end.toUTCString();
                     console.log(newEnd);
-                        console.log("hello");
+                    console.log("hello");
 
-                    var myEvent = { id: event._id, title: event.title, start: event.start, end: newEnd, allDay: false};
+                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
 
                     // itObj.events[i].end = event.end.toUTCString();
                     // itObj.events[i].start = event.start.toUTCString();
