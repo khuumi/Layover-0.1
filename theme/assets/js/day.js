@@ -299,7 +299,11 @@ $(document).ready(function() {
                     $(this).draggable({
                         zIndex: 999,
                         revert: true,        // will cause the event to go back to its
-                        revertDuration: 0.5  //  original position after the drag
+                        revertDuration: 0.5,  //  original position after the drag
+                        helper: 'clone',
+                        start: function(e,ui) {
+                            $(ui.helper).addClass('ui-draggable-helper')
+                        }
                     });
 
                 }); // end even each function

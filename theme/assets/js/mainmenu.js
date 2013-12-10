@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	init()
+    init()
     function init() {
         if (!store.enabled) {
             alert('Local storage is not supported by your browser. Please disabled "Private Mode", or upgrade to a modern browser')
@@ -13,8 +13,7 @@ $(document).ready(function() {
         var id = store.get(itID);
         var $itineraryHTML = $('<div class="itinerary">' + '<div id="menu-left">' + '<a href=\"day.html?id='+ itID + '\">' + 
             id.city + ', '+ id.country + '<br>' + '<span class=\"small\">' + id.startD + ' - ' + id.endD + 
-            '</span></a></div>' + '<div id="menu-middle"><button type="button" id=' + itID + 
-            ' class=\"btn btn-info btn-xs edit-button\">' + '<span class="glyphicon glyphicon-edit"></span></button></div>' + 
+            '</span></a></div>' + '<a class="editbox" href="#date-popup" id='+ itID + '><div id="menu-middle"><button type="button" class=\"btn btn-info btn-xs edit-button\">' + '<span class="glyphicon glyphicon-edit"></span></button></div></a>' + 
             ' <div id="menu-right"><button type="button"  id= ' + itID + ' class=\"btn btn-danger btn-xs delete-button\">' + 
             ' <span class="glyphicon glyphicon-remove"></span></button></div>' + '</div>');
         $itineraries.append($itineraryHTML);
@@ -23,6 +22,50 @@ $(document).ready(function() {
 
     $("#itineraries").html($itineraries);
     //end for loop
+
+
+    $('.save-button').click(function(){
+    
+        alert("YO");
+        var itID = $(this).attr("id");
+
+        console.log(itID);
+        var id = store.get(itID);
+
+        var startDate = $("#start_date_edit").val().split('-').join('/');
+        var endDate = $("#end_date_edit").val().split('-').join('/');;
+
+        if (startDate == "" || endDate == "") { //Validation
+            //var err = ("The following fields must be filled:" + (location == "" ?"\n - Location":"") + (startDate == ""?"\n - Start Date":"") + (endDate == ""?"\n - End Date":""));
+            //alert(err);
+            var n = noty({text: 'Error: All fields are required.', layout:'topCenter', type:'warning', timeout: '5000'});
+            console.dir("printed error");
+            return false;
+        };
+
+        var sDate = new Date(startDate);
+        var eDate = new Date(endDate);
+
+        var startDay = sDate.getDate();
+        var startMonth = sDate.getMonth()+1;
+        var startYear = sDate.getFullYear();
+
+        var endDay = eDate.getDate();
+        var endMonth = eDate.getMonth()+1;
+        var endYear = eDate.getFullYear();
+
+        //We need to get the dates from here and save it as day, month, and year
+
+        var arrayofEvents = new Array();
+
+
+        store.set(itID, {city: id.city, country: id.country, 
+        sDay: startDay, sMonth: startMonth, sYear: startYear, 
+        eDay: endDay, eMonth: endMonth, eYear: endYear, startD: startDate, endD: endDate, 
+        events: id.events });
+
+
+    })
 
     $('.delete-button').click(function(){
     // console.log($(this).attr("id"));
@@ -53,12 +96,12 @@ $(document).ready(function() {
 
 ;(function(){
 
-			// Menu settings
-			$('#menuToggle, .menu-close').on('click', function(){
-				$('#menuToggle').toggleClass('active');
-				$('body').toggleClass('body-push-toleft');
-				$('#theMenu').toggleClass('menu-open');
-			});
+            // Menu settings
+            $('#menuToggle, .menu-close').on('click', function(){
+                $('#menuToggle').toggleClass('active');
+                $('body').toggleClass('body-push-toleft');
+                $('#theMenu').toggleClass('menu-open');
+            });
 
 
 })(jQuery)
