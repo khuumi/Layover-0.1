@@ -8,10 +8,14 @@
     <link href="assets/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 
+    <link href="http://api.tiles.mapbox.com/mapbox.js/v1.5.1/mapbox.css' rel='stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/css/leaflet.css">
+
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css">
 
     <link rel="stylesheet" type="text/css" href="assets/css/fullcalendar.css">
+
 
     <!-- <script src="assets/js/modernizr.custom.js"></script> -->
 
@@ -69,7 +73,8 @@
     </div>
 
     <a class="fancybox" href="#calendar-popup" id="calendar-popup-link">(hidden link)</a>
-    <div id="popup">stuff</div>
+    <div id="popup">
+    </div>
     <div id="calendar-popup" data-eventID="0">stuff</div>
 
     <!-- <footer>
@@ -87,6 +92,9 @@
     <!-- Foursquare.js -->
     <script src="assets/js/foursquare.js"></script>
 
+    <script src="assets/js/leaflet.js"></script>
+    <script src="http://api.tiles.mapbox.com/mapbox.js/v1.5.1/mapbox.js"></script>
+
     <!-- main javascript -->
     <script src="assets/js/day.js"></script>
     <script src="assets/js/mainmenu.js"></script>
@@ -103,8 +111,9 @@
         (function() {
             $('.fancybox').fancybox({
                 padding: 20,
-                minWidth: 500,
-                maxWidth: 500,
+                minWidth: 800,
+                maxWidth: 800,
+                minHeight: 400,
                 helpers : {
                     overlay : {
                         css : {

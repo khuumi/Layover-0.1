@@ -1,8 +1,10 @@
 var foursquare = new Foursquare;
- foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
+foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
 //foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
 foursquare.setURL("https://api.foursquare.com/v2/");
 foursquare.setVersionParameter("20131205");
+
+// var mapbox = new Mapbox;
 
 $(document).ready(function() {
     init();
@@ -187,12 +189,14 @@ $(document).ready(function() {
                 });
 
                 $('.event').click(function() {
-                    console.dir('in event')
                     getVenueInfo(venue_id, function(response) {
-
-                        console.dir('info:');
+                        console.dir('venue info:');
                         console.dir(response);
-                        $('#popup').html(response.contact.formattedPhone);
+                        var venue_info = parseInfo(response);
+                        $('#popup').html(venue_info);
+                        var lat = response.location.lat;
+                        var lng = response.location.lng;
+                        var map = L.mapbox.map('map', 'jameshong.ggk4nail').setView([lat, lng], 14);
                     });
                 });
             }
@@ -200,10 +204,8 @@ $(document).ready(function() {
     });
 
     $('#placeholder').click(function() {
-        console.dir('in event')
         getVenueInfo(venue_id, function(response) {
-
-            console.dir('info:');
+            console.dir('venue info:');
             console.dir(response);
             $('#popup').html(response.contact.formattedPhone);
         });
@@ -212,10 +214,14 @@ $(document).ready(function() {
     // Return venue information by calling get_venue function
     function getVenueInfo(venue_id, callback) {
         var url = '';
-        foursquare.get_venue (
-            {q: venue_id}, function(response) {
-                return callback(response);
-            });
+        foursquare.get_venue ({q: venue_id}, function(response) {
+            return callback(response);
+        });
+    }
+
+    function parseInfo(info) {
+        var output = '<div class="popup-left"></div><div class="popup-right"><div id="map" class="map"></div></div>';
+        return output;
     }
 });
 
