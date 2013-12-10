@@ -73,15 +73,33 @@ $(document).ready(function() {
                 console.dir(response);
                 var venue_info = parseInfo(response);
                 $('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
-                addMap(response);
+                //addMap(response);
 
                 $('.delete-event').click(function() {
-                    var r = confirm('Are you sure you want to remove this event from your schedule?');
-                    if (r == true) {
-                        var eid = $(this).attr('id');
-                        $('#calendar').fullCalendar( 'removeEvents', eid );
-                        $.fancybox.close();
-                    }
+                    // var r = confirm('Are you sure you want to remove this event from your schedule?');
+                    // if (r == true) {
+                    //     var eid = $(this).attr('id');
+                    //     $('#calendar').fullCalendar( 'removeEvents', eid );
+                    //     $.fancybox.close();
+                    // }
+                    var eid = $(this).attr('id');
+                    var r = noty({
+                        text: 'Are you sure you want to delete this itinerary?',
+                        layout:'topCenter',
+                        type:'confirmation',
+                        buttons: [
+                            {addClass: 'confirm-btn', text: 'Ok', onClick: function($noty) {
+                                    $('#calendar').fullCalendar( 'removeEvents', eid );
+                                    $.fancybox.close();
+                                    $noty.close();
+                                }   
+                            },
+                            {addClass: 'confirm-btn', text: 'Cancel', onClick: function($noty) {
+                                    $noty.close();
+                            }
+                        }],
+                        killer: true
+                    });
                 });
             });
 

@@ -29,11 +29,25 @@ $(document).ready(function() {
         var itID = $(this).attr("id");
         var id = store.get(itID);
 
-        var r = confirm('Do you want to delete the itinerary:\n' + id.city + ',' + id.country + ' (' + id.startD + ' - ' + id.endD + ') ?');
-        if (r==true) {
-            store.remove(itID);
-            window.location.reload(true);
-        }
+        var r = noty({
+            text: 'Are you sure you want to delete this itinerary?',
+            layout:'topCenter',
+            type:'confirmation',
+            buttons: [
+                {addClass: 'confirm-btn', text: 'Ok', onClick: function($noty) {
+                        store.remove(itID);
+                        window.location.reload(true);
+                        $noty.close();
+                    }   
+                },
+                {addClass: 'confirm-btn', text: 'Cancel', onClick: function($noty) {
+                        $noty.close();
+                }
+            }],
+            killer: true
+        });
+        //var r = confirm('Do you want to delete the itinerary:\n' + id.city + ',' + id.country + ' (' + id.startD + ' - ' + id.endD + ') ?');
+
     }); //end delete button function
 });
 

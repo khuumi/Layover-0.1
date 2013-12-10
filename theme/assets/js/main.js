@@ -51,7 +51,7 @@ $(document).ready(function() {
         if (location == "" || startDate == "" || endDate == "") { //Validation
             //var err = ("The following fields must be filled:" + (location == "" ?"\n - Location":"") + (startDate == ""?"\n - Start Date":"") + (endDate == ""?"\n - End Date":""));
             //alert(err);
-            var n = noty({text: 'Please enter all the fields!!', layout:'center'});
+            var n = noty({text: 'Error: All fields are required.', layout:'topCenter', type:'warning', timeout: '5000'});
             console.dir("printed error");
             return false;
         };
