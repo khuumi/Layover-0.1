@@ -1,6 +1,6 @@
 var foursquare = new Foursquare;
-//foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
-foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
+foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
+//foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
 foursquare.setURL("https://api.foursquare.com/v2/");
 foursquare.setVersionParameter("20131205");
 
@@ -29,14 +29,12 @@ $(document).ready(function() {
         itinerary.events[i].end = new Date(itinerary.events[i].end);
     }
 
-
-
     //console.log(itinerary.events);
 
     function get_calendar_height() {
         return $('#main-left').height();
     }
-
+    
     // dynamic calendar resize -- messes up resizing events for some reason
     // $(window).resize(function() {
     //     $('#calendar').fullCalendar('option', 'height', get_calendar_height());
@@ -338,11 +336,10 @@ $(document).ready(function() {
         var venue_name = '<span class="venue-name"><b>' + info.name + '</b></span>';
         var venue_categories = '';
         var i = 0;
-        for (i=0; i<info.categories.length; i++) {
-            venue_categories = venue_categories + info.categories[i].name + (i !== info.categories.length - 1 ? ', ' : '');
-        }
-
-        // var icon = typeof info.categories[0] !== "undefined" ? info.categories[0].icon.prefix + info.categories[0].icon.suffix : "";
+        if (info.categories !== "undefined")
+            for (i=0; i<info.categories.length; i++) {
+                venue_categories = venue_categories + info.categories[i].name + (i !== info.categories.length - 1 ? ', ' : '');
+            }
 
         var address = typeof info.location.address !== "undefined" ? info.location.address : "";
             address += typeof info.location.crossStreet !== "undefined" ? " (" + info.location.crossStreet + ")" : "";
@@ -350,24 +347,19 @@ $(document).ready(function() {
             address += typeof info.location.state !== "undefined" ? ", " + info.location.state : (typeof info.location.country !== "undefined" ? ", " + info.location.country : "");
             address += typeof info.location.postalCode !== "undefined" ? " " + info.location.postalCode : "";
 
-        if(info.contact !== undefined) {
-            var phone = info.contact.formattedPhone;
-        }
+        var phone = typeof info.contact !== "undefined" ? '<span class="glyphicon glyphicon-earphone"></span>' + info.contact.formattedPhone : "";
 
-        if(info.hours !== undefined) {
-            var hours = info.hours.status;
-        }
+        var url = typeof info.url !== "undefined" ? '<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>' : "";
 
-        if(info.menu !== undefined) {
-            var menus = typeof info.menu.url !== "undefined" ?'<a href=\"' + info.menu.url + '\" target=\"_blank\">view menus</a>' : "";
-        }
+        var hours = typeof info.hours !== "undefined" ? info.hours.status : "";
+
+        var menus = typeof info.menu.url !== "undefined" ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : "";
 
         var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
-
-        var str = venue_name + '<br>' + venue_categories + '<br>' + address + '<br><hr />' + phone + '<p>' + hours + ' ' + menus + '</p><hr />' + rating ;
+        var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + ' ' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
         var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
@@ -380,7 +372,7 @@ $(document).ready(function() {
         var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
             maxZoom:16,
             attributionControl:false
-        }).setView([lat, lng], 14);
+        }).setView([lat, lng], 15);
         L.mapbox.markerLayer({
             type: 'Feature',
             geometry: {
@@ -391,12 +383,12 @@ $(document).ready(function() {
                 title: response.name,
                 description: '',
                 'marker-size': 'large',
-                'marker-color': '#5E9DC8'
+                'marker-color': '#5E9DC8',
+                'marker-symbol': 'circle-stroked'
             }
         }).addTo(map);
     }
 });
-
 
 // Get query parameters
 // http://stackoverflow.com/a/901144
