@@ -248,9 +248,7 @@ $(document).ready(function() {
                         address += typeof venue.location.crossStreet !== "undefined" ? " (" + venue.location.crossStreet + ")" : "";
 
                         // var rating = typeof venue.rating !== undefined ? venue.rating : "N/A";
-                        var rating = typeof venue.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
-                        'Rating: <span itemprop="ratingValue" style="display:none">' + (venue.rating) + '</span> <i class="icon-star"></i><i class="icon-star"></i>' +
-                        '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
+                        var rating = typeof venue.rating !== "undefined" ? "Rating: "+ venue.rating + ' / 10' : "";
 
 
                         var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
@@ -349,9 +347,7 @@ $(document).ready(function() {
 
         var menus = typeof info.menu !== "undefined" ? '| <a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : '';
 
-        var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
-        '<span itemprop="ratingValue">' + (info.rating/2.0) + '</span> / 5 <i class="icon-star"></i><i class="icon-star"></i>' +
-        '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
+        var rating = typeof info.rating !== "undefined" ? "Rating: " + info.rating + ' / 10' : "";
 
         var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
