@@ -61,7 +61,7 @@ $(document).ready(function() {
     
         var itID = $(this).attr("id");
 
-        console.log(itID);
+        // console.log(itID);
         var id = store.get(itID);
 
         var startDate = $("#start_date_edit").val().split('-').join('/');
@@ -75,7 +75,7 @@ $(document).ready(function() {
             return false;
         };
 
-        var locID = id.locID;
+        var locID = id.locid;
 
         var sDate = new Date(startDate);
         var eDate = new Date(endDate);
@@ -95,13 +95,13 @@ $(document).ready(function() {
         var itineraryID = locID+ ';'+startYear+'/'+startMonth+'/'+startDay+'-'+endYear+'/'+endMonth+'/'+endDay;
 
 
-
         store.set(itineraryID, {locid: id.locid, city: id.city, country: id.country, 
         sDay: startDay, sMonth: startMonth, sYear: startYear, 
         eDay: endDay, eMonth: endMonth, eYear: endYear, startD: startDate, endD: endDate, 
         events: id.events });
-    location.reload();
-
+        
+        store.remove(itID);
+        window.location = "day.html?id=" + itineraryID;
         
 
     })

@@ -163,12 +163,20 @@ $(document).ready(function() {
         }
     });
 
-    var startYear = id.startD.substring(0,4);
-    var startMonth = id.startD.substring(5,7);
-    var startDay = id.startD.substring(8,10);
-    var endYear = id.endD.substring(0,4);
-    var endMonth = id.endD.substring(5,7);
-    var endDay = id.endD.substring(8,10);
+
+
+    // var startYear = id.startD.substring(0,4);
+    // var startMonth = id.startD.substring(5,7);
+    // var startDay = id.startD.substring(8,10);
+    // var endYear = id.endD.substring(0,4);
+    // var endMonth = id.endD.substring(5,7);
+    // var endDay = id.endD.substring(8,10);
+    var startYear = id.sYear;
+    var startMonth = id.sMonth;
+    var startDay = id.sDay;
+    var endYear = id.eYear;
+    var endMonth = id.eMonth;
+    var endDay = id.eDay;
 
     $('#calendar').fullCalendar( 'gotoDate', startYear, startMonth-1, startDay);
 
