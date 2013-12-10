@@ -65,7 +65,7 @@ $(document).ready(function() {
             var venue_id = calEvent.venueID;
             console.log(calEvent);
 
-            getVenueInfo(venue_imgid, function(response) {
+            getVenueInfo(venue_id, function(response) {
 
                 // console.dir('info:');
                 // console.dir(response);
