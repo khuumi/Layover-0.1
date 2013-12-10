@@ -82,6 +82,7 @@ $(document).ready(function() {
         events: arrayofEvents });
 
         window.location = 'day.html?id=' + itineraryID;
+        
 
     }); //end add-button function
 

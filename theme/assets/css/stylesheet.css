@@ -383,6 +383,10 @@ html, body {
     height: 88%;
 }
 
+#date-popup {
+    display: none;
+}
+
 .loading {
     display: block;
     margin: 195px auto;

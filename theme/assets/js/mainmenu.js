@@ -9,7 +9,9 @@ $(document).ready(function() {
     var $itineraries = $('<div id="listOfItin"></div>');
 
     store.forEach(function(itID, value) {
-       
+
+
+
         var id = store.get(itID);
         var $itineraryHTML = $('<div class="itinerary">' + '<div id="menu-left">' + '<a href=\"day.html?id='+ itID + '\">' + 
             id.city + ', '+ id.country + '<br>' + '<span class=\"small\">' + id.startD + ' - ' + id.endD + 
@@ -24,9 +26,37 @@ $(document).ready(function() {
     //end for loop
 
 
+    $('.editbox').click(function(){
+
+         var itID = $(this).attr("id");
+
+         var editPopup = '<h3> Please enter your new dates</h3>'+
+                        '<div class="input-daterange" id="time">'+
+                            '<input type="text" class="input-small" name="start"  id="start_date_edit" placeholder="yyyy-mm-dd" />' +
+                            '<span class="add-on" style="color: black">to</span>' +
+                            '<input type="text" class="input-small" name="end" id = "end_date_edit" placeholder="yyyy-mm-dd" />' +
+                            '<button class="btn btn-success save-button" id='+ itID + '>Save</button>' +
+
+                        '</div>';
+                
+
+        $('#date-popup').html(editPopup);
+
+        $('#start_date_edit').datepicker();
+        $('#end_date_edit').datepicker();
+
+        $('.input-daterange').datepicker({
+        format: 'yyyy-mm-dd',
+        startDate: (new Date()).toString()
+        // orientation: "bottom auto"   
+    });
+
+    $('.input-daterange').datepicker().on('changeDate', function(){
+        $(this).blur();
+    });
+
     $('.save-button').click(function(){
     
-        alert("YO");
         var itID = $(this).attr("id");
 
         console.log(itID);
@@ -63,9 +93,18 @@ $(document).ready(function() {
         sDay: startDay, sMonth: startMonth, sYear: startYear, 
         eDay: endDay, eMonth: endMonth, eYear: endYear, startD: startDate, endD: endDate, 
         events: id.events });
+    location.reload();
 
+        
 
     })
+
+
+
+
+    });
+
+
 
     $('.delete-button').click(function(){
     // console.log($(this).attr("id"));
