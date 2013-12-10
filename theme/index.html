@@ -125,6 +125,48 @@
     </script>
 
 
+<!-- Fancybox -->
+    <link rel="stylesheet" href="assets/js/fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen">
+
+    <script src="assets/js/fancybox/source/jquery.fancybox.pack.js?v=2.1.4"></script>
+
+    <script>
+        (function() {
+            $('.editbox').fancybox({
+                padding: 20,
+                minWidth: 600,
+                maxWidth: 800,
+                minHeight: 150,
+                helpers : {
+                    overlay : {
+                        css : {
+                            'background' : 'rgba(0,0,0,0.6)'
+                        },
+                        locked: false
+                    }
+                }
+            });
+        })();
+    </script>
+
+
+   <!--  <a class="fancybox" href="#date-popup" id="date-popup-link">(hidden link)</a> -->
+    <div id="date-popup">
+    <h3> Please enter your new dates</h3>
+                <div class="input-daterange" id="time">
+                            <input type="text" class="input-small" name="start"  id="start_date_edit" placeholder="yyyy-mm-dd" />
+                            <span class="add-on" style="color: black">to</span>
+                            <input type="text" class="input-small" name="end" id = "end_date_edit" placeholder="yyyy-mm-dd" />
+                                            <button class="btn btn-success save-button" id="itID">Save</button>
+
+                        </div>
+                
+
+    </div>
+
+
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
