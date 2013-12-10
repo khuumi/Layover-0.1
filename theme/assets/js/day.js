@@ -36,11 +36,15 @@ $(document).ready(function() {
         editable: true,
         slotEventOverlap: false,
 
-        // eventClick: function(calEvent, jsEvent, view) {
+        eventClick: function(calEvent, jsEvent, view) {
 
-        //     $('#calendar').fullCalendar( 'removeEvents', calEvent.id );
+            console.log(calEvent._id);
+            console.log(calEvent.venueID);
+            // $('#calendar-popup').data('eventID',calEvent.id);
+            // console.log($('#calendar-popup').data('eventID'));
+            // $('#calendar-popup-link').trigger('click');
 
-        // },
+        },
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
         drop: function(date, allDay, jsEvent, ui) { // this function is called when something is dropped
@@ -60,12 +64,6 @@ $(document).ready(function() {
             // render the event on the calendar
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
             $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-            
-            // is the "remove after drop" checkbox checked?
-            if ($('#drop-remove').is(':checked')) {
-                // if so, remove the element from the "Draggable Events" list
-                $(this).remove();
-            }
             
         }
     });
@@ -176,7 +174,7 @@ $(document).ready(function() {
                 $('.event').each(function() {
                     var eventObject = {
                         title: $.trim($(this).find('.venue-name').text()), // use the element's text as the event title
-                        //id: $(this).attr('id')
+                        venueID: $(this).attr('id')
                     };
                     
                     // store the Event Object in the DOM element so we can get to it later
