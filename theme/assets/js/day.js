@@ -7,10 +7,10 @@ foursquare.setVersionParameter("20131205");
 // var mapbox = new Mapbox;
 
 $(document).ready(function() {
-    var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
-            maxZoom:16,
-            attributionControl:false
-        });
+    // var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+    //         maxZoom:16,
+    //         attributionControl:false
+    //     });
 
     init();
     function init() {
