@@ -67,7 +67,7 @@ $(document).ready(function() {
             var venue_id = calEvent.venueID;
             console.log(calEvent);
 
-            getVenueInfo(venue_imgid, function(response) {
+            getVenueInfo(venue_id, function(response) {
 
                 // console.dir('info:');
                 // console.dir(response);
@@ -447,11 +447,17 @@ $(document).ready(function() {
             address += typeof info.location.state !== "undefined" ? ", " + info.location.state : (typeof info.location.country !== "undefined" ? ", " + info.location.country : "");
             address += typeof info.location.postalCode !== "undefined" ? " " + info.location.postalCode : "";
 
-        var phone = info.contact.formattedPhone;
+        if(info.contact !== undefined) {
+            var phone = info.contact.formattedPhone;
+        }
 
-        var hours = info.hours.status;
+        if(info.hours !== undefined) {
+            var hours = info.hours.status;
+        }
 
-        var menus = typeof info.menu.url !== "undefined" ?'<a href=\"' + info.menu.url + '\" target=\"_blank\">view menus</a>' : "";
+        if(info.menu !== undefined) {
+            var menus = typeof info.menu.url !== "undefined" ?'<a href=\"' + info.menu.url + '\" target=\"_blank\">view menus</a>' : "";
+        }
 
         var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
