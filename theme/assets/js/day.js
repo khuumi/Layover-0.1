@@ -1,6 +1,6 @@
 var foursquare = new Foursquare;
-foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
-//foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
+//foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
+foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
 foursquare.setURL("https://api.foursquare.com/v2/");
 foursquare.setVersionParameter("20131205");
 
@@ -71,7 +71,11 @@ $(document).ready(function() {
 
                 // console.dir('info:');
                 // console.dir(response);
-                $('#calendar-popup').html(response.contact.formattedPhone + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+                console.dir('venue info:');
+                console.dir(response);
+                var venue_info = parseInfo(response);
+                $('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+                addMap(response);
 
                 $('.delete-event').click(function() {
                     var r = confirm('Are you sure you want to remove this event from your schedule?');
@@ -374,29 +378,36 @@ $(document).ready(function() {
                 $('.event').click(function() {
 
                     $('#popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
+                    
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
                     getVenueInfo(venue_id, function(response) {
-                        console.dir('venue info:');
-                        console.dir(response);
-                        var venue_info = parseInfo(response);
-                        $('#popup').html(venue_info);
-                        var lat = response.location.lat;
-                        var lng = response.location.lng;
-                        var map = L.mapbox.map('map', 'jameshong.ggk4nail').setView([lat, lng], 14);
-                        L.mapbox.markerLayer({
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [lat, lng]
-                            },
-                            properties: {
-                                title: response.name,
-                                description: '',
-                                'marker-size': 'large',
-                                'marker-color': '#5E9DC8'
-                            }
-                        }).addTo(map);
+                        // console.dir('venue info:');
+                        // console.dir(response);
+                        // var venue_info = parseInfo(response);
+                        // $('#popup').html(venue_info);
+                        // var lat = response.location.lat;
+                        // var lng = response.location.lng;
+                        
+                        // // map.markerLayer.setGeoJSON(geoJson);
+                        // var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+                        //     maxZoom:15,
+                        //     attributionControl:false
+                        // }).setView([lat, lng], 14);
+                        // L.mapbox.markerLayer({
+                        //     type: 'Feature',
+                        //     geometry: {
+                        //         type: 'Point',
+                        //         coordinates: [lng, lat]
+                        //     },
+                        //     properties: {
+                        //         title: response.name,
+                        //         description: '',
+                        //         'marker-size': 'large',
+                        //         'marker-color': '#5E9DC8',
+                        //         'marker-symbol': 'circle'
+                        //     }
+                        // }).addTo(map);
                         // console.dir('info:');
                         // console.dir(response);
                         //$('#popup').html(response.contact.formattedPhone);
@@ -411,13 +422,69 @@ $(document).ready(function() {
     function getVenueInfo(venue_id, callback) {
         var url = '';
         foursquare.get_venue ({q: venue_id}, function(response) {
+            console.dir('venue info:');
+            console.dir(response);
+            var venue_info = parseInfo(response);
+            $('#popup').html(venue_info);
+            addMap(response);
             return callback(response);
         });
     }
 
     function parseInfo(info) {
-        var output = '<div class="popup-left"></div><div class="popup-right"><div id="map" class="map"></div></div>';
+        var venue_name = '<span class="venue-name"><b>' + info.name + '</b></span>';
+        var venue_categories = '';
+        var i = 0;
+        for (i=0; i<info.categories.length; i++) {
+            venue_categories = venue_categories + info.categories[i].name + (i !== info.categories.length - 1 ? ', ' : '');
+        }
+
+        // var icon = typeof info.categories[0] !== "undefined" ? info.categories[0].icon.prefix + info.categories[0].icon.suffix : "";
+
+        var address = typeof info.location.address !== "undefined" ? info.location.address : "";
+            address += typeof info.location.crossStreet !== "undefined" ? " (" + info.location.crossStreet + ")" : "";
+            address += typeof info.location.city !== "undefined" ? ", " + info.location.city : "";
+            address += typeof info.location.state !== "undefined" ? ", " + info.location.state : (typeof info.location.country !== "undefined" ? ", " + info.location.country : "");
+            address += typeof info.location.postalCode !== "undefined" ? " " + info.location.postalCode : "";
+
+        var phone = info.contact.formattedPhone;
+
+        var hours = info.hours.status;
+
+        var menus = typeof info.menu.url !== "undefined" ?'<a href=\"' + info.menu.url + '\" target=\"_blank\">view menus</a>' : "";
+
+        var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
+        '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
+        '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
+
+
+        var str = venue_name + '<br>' + venue_categories + '<br>' + address + '<br><hr />' + phone + '<p>' + hours + ' ' + menus + '</p><hr />' + rating ;
+
+        var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
+    }
+
+    function addMap(response) {
+        var lat = response.location.lat;
+        var lng = response.location.lng;
+        
+        var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+            maxZoom:16,
+            attributionControl:false
+        }).setView([lat, lng], 14);
+        L.mapbox.markerLayer({
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [lng, lat]
+            },
+            properties: {
+                title: response.name,
+                description: '',
+                'marker-size': 'large',
+                'marker-color': '#5E9DC8'
+            }
+        }).addTo(map);
     }
 });
 
