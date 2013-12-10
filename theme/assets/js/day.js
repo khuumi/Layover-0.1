@@ -7,10 +7,10 @@ foursquare.setVersionParameter("20131205");
 // var mapbox = new Mapbox;
 
 $(document).ready(function() {
-    // var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
-    //         maxZoom:16,
-    //         attributionControl:false
-    //     });
+    var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+            maxZoom:16,
+            attributionControl:false
+        });
 
     init();
     function init() {
@@ -70,9 +70,7 @@ $(document).ready(function() {
             var venue_id = calEvent.venueID;
             console.log(calEvent);
 
-            getVenueInfo(venue_id, function(response) {
-
-            });
+            getVenueInfo(venue_id);
             // console.dir('info:');
                 // console.dir(response);
                 // console.dir('info:');
@@ -81,32 +79,32 @@ $(document).ready(function() {
                 //$('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
                 //addMap(response);
 
-                $('.delete-event').click(function() {
-                    // var r = confirm('Are you sure you want to remove this event from your schedule?');
-                    // if (r == true) {
-                    //     var eid = $(this).attr('id');
-                    //     $('#calendar').fullCalendar( 'removeEvents', eid );
-                    //     $.fancybox.close();
-                    // }
-                    var eid = $(this).attr('id');
-                    var r = noty({
-                        text: 'Are you sure you want to delete this itinerary?',
-                        layout:'topCenter',
-                        type:'confirmation',
-                        buttons: [
-                            {addClass: 'confirm-btn', text: 'Ok', onClick: function($noty) {
-                                    $('#calendar').fullCalendar( 'removeEvents', eid );
-                                    $.fancybox.close();
-                                    $noty.close();
-                                }   
-                            },
-                            {addClass: 'confirm-btn', text: 'Cancel', onClick: function($noty) {
-                                    $noty.close();
-                            }
-                        }],
-                        killer: true
-                    });
+            $('.delete-event').click(function() {
+                // var r = confirm('Are you sure you want to remove this event from your schedule?');
+                // if (r == true) {
+                //     var eid = $(this).attr('id');
+                //     $('#calendar').fullCalendar( 'removeEvents', eid );
+                //     $.fancybox.close();
+                // }
+                var eid = $(this).attr('id');
+                var r = noty({
+                    text: 'Are you sure you want to delete this itinerary?',
+                    layout:'topCenter',
+                    type:'confirmation',
+                    buttons: [
+                        {addClass: 'confirm-btn', text: 'Ok', onClick: function($noty) {
+                                $('#calendar').fullCalendar( 'removeEvents', eid );
+                                $.fancybox.close();
+                                $noty.close();
+                            }   
+                        },
+                        {addClass: 'confirm-btn', text: 'Cancel', onClick: function($noty) {
+                                $noty.close();
+                        }
+                    }],
+                    killer: true
                 });
+            });
 
             $('#popup-link').trigger('click');
 
@@ -252,22 +250,22 @@ $(document).ready(function() {
                     for (var i in reply) {
                         var venue = "";
                         var venue = reply[i].venue;
-                        var venue_img = typeof venue.photos.groups[0] !== undefined ? venue.photos.groups[0].items[0].prefix + 
+                        var venue_img = typeof venue.photos.groups[0] !== "undefined" ? venue.photos.groups[0].items[0].prefix + 
                         "300x300" + venue.photos.groups[0].items[0].suffix : "error.jpg";
 
                         //set variables
                         var venue_name = venue.name;
                         var venue_id = venue.id;
-                        var address = typeof venue.location.address !== undefined ? venue.location.address + "<br>" : "";
-                        address += typeof venue.location.crossStreet !== undefined ? " (" + venue.location.crossStreet + ")" : "";
+                        var address = typeof venue.location.address !== "undefined" ? venue.location.address + "<br>" : "";
+                        address += typeof venue.location.crossStreet !== "undefined" ? " (" + venue.location.crossStreet + ")" : "";
 
                         // var rating = typeof venue.rating !== undefined ? venue.rating : "N/A";
-                        var rating = typeof venue.rating !== undefined ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
+                        var rating = typeof venue.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
                         'Rating: <span itemprop="ratingValue" style="display:none">' + (venue.rating) + '</span> <i class="icon-star"></i><i class="icon-star"></i>' +
                         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
 
-                        var category = typeof venue.categories[0] !== undefined ? venue.categories[0].shortName : "Uncategorized";
+                        var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
 
                         //var $detail = $();
                         //var detail = info.url;
@@ -309,37 +307,7 @@ $(document).ready(function() {
                     
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
-                    getVenueInfo(venue_id, function(response) {
-                        // console.dir('venue info:');
-                        // console.dir(response);
-                        // var venue_info = parseInfo(response);
-                        // $('#popup').html(venue_info);
-                        // var lat = response.location.lat;
-                        // var lng = response.location.lng;
-                        
-                        // // map.markerLayer.setGeoJSON(geoJson);
-                        // var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
-                        //     maxZoom:15,
-                        //     attributionControl:false
-                        // }).setView([lat, lng], 14);
-                        // L.mapbox.markerLayer({
-                        //     type: 'Feature',
-                        //     geometry: {
-                        //         type: 'Point',
-                        //         coordinates: [lng, lat]
-                        //     },
-                        //     properties: {
-                        //         title: response.name,
-                        //         description: '',
-                        //         'marker-size': 'large',
-                        //         'marker-color': '#5E9DC8',
-                        //         'marker-symbol': 'circle'
-                        //     }
-                        // }).addTo(map);
-                        // console.dir('info:');
-                        // console.dir(response);
-                        //$('#popup').html(response.contact.formattedPhone);
-                    }); // end getVenueInfo function
+                    getVenueInfo(venue_id); // end getVenueInfo function
                 }); //end event click function
             }
         ); //end foursquare explore function
@@ -347,7 +315,7 @@ $(document).ready(function() {
 
 
     // Return venue information by calling get_venue function
-    function getVenueInfo(venue_id, callback) {
+    function getVenueInfo(venue_id) {
         var url = '';
         foursquare.get_venue ({q: venue_id}, function(response) {
             console.dir('venue info:');
@@ -355,7 +323,6 @@ $(document).ready(function() {
             var venue_info = parseInfo(response);
             $('#popup').html(venue_info);
             addMap(response);
-            return callback(venue_info);
         });
     } //end getVenueInfo
 
@@ -372,29 +339,29 @@ $(document).ready(function() {
         }
 
         var address = "";
-        if (info.location !== undefined) {
-            address = typeof info.location.address !== undefined ? info.location.address : "";
-            address += typeof info.location.crossStreet !== undefined ? " (" + info.location.crossStreet + ")" : "";
-            address += typeof info.location.city !== undefined ? ", " + info.location.city : "";
-            address += typeof info.location.state !== undefined ? ", " + info.location.state : (typeof info.location.country !== undefined ? ", " + info.location.country : "");
-            address += typeof info.location.postalCode !== undefined ? " " + info.location.postalCode : "";
+        if (info.location !== "undefined") {
+            address = typeof info.location.address !== "undefined" ? info.location.address : "";
+            address += typeof info.location.crossStreet !== "undefined" ? " (" + info.location.crossStreet + ")" : "";
+            address += typeof info.location.city !== "undefined" ? ", " + info.location.city : "";
+            address += typeof info.location.state !== "undefined" ? ", " + info.location.state : (typeof info.location.country !== "undefined" ? ", " + info.location.country : "");
+            address += typeof info.location.postalCode !== "undefined" ? " " + info.location.postalCode : "";
         }
 
-        var phone = typeof info.contact !== undefined ? '<span class="glyphicon glyphicon-earphone"></span> ' + info.contact.formattedPhone : "";
+        var phone = typeof info.contact !== "undefined" ? '<span class="glyphicon glyphicon-earphone"></span> ' + info.contact.formattedPhone : "";
 
-        var url = typeof info.url !== undefined ? ('<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>') : 
-            (typeof info.shortUrl !== undefined ? ('<a href=\"' + info.shortUrl + '\" target=\"_blank\">' + info.shortUrl + '</a>') : "");
+        var url = typeof info.url !== "undefined" ? ('<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>') : 
+            (typeof info.shortUrl !== "undefined" ? ('<a href=\"' + info.shortUrl + '\" target=\"_blank\">' + info.shortUrl + '</a>') : "");
             console.dir(info.shortUrl);
 
-        var hours = (typeof info.hours !== undefined && typeof info.hours.status !== undefined) ? info.hours.status : '';
+        var hours = typeof info.hours !== "undefined" ? (typeof info.hours.status !== "undefined" ? info.hours.status : '') : '';
 
-        var menus = typeof info.menu !== undefined ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : '';
+        var menus = typeof info.menu !== "undefined" ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : '';
 
-        var rating = typeof info.rating !== undefined ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
+        var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
-        var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
+        var str = venue_name + '<div class = "delete-div"></div><br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
         var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
