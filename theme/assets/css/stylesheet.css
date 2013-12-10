@@ -277,7 +277,6 @@ p {
     margin: 5px;
     padding: 5px;
     color: white;
-
 }
 
 #menu-bottom a {
@@ -316,7 +315,11 @@ p {
 #main-right {
     float: right;
     width: 500px;
-    min-height: 530px;
+    /*min-height: 530px;*/
+    overflow: auto;
+    height: auto;
+    bottom: 0;
+    /*position: fixed;*/
     margin: 70px 5px 20px;
     padding: 10px;
     border: 1px solid #333;
@@ -325,8 +328,13 @@ p {
 }
 
 #search-form {
+    width: 500px;
     text-align: center;
+    background: #eee;
+    height: 60px;
     margin-top: 5px;
+    position: fixed;
+    z-index:1;
 }
 
 #search-form input[type="text"] {
@@ -367,6 +375,12 @@ p {
     border: 1px solid #0C4D7A;
     background: #1869A3;
     color: white;
+}
+
+#result {
+    position: relative;
+    margin-top: 70px;
+    height: auto;
 }
 
 .loading {
