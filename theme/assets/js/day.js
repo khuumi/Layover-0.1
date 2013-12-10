@@ -32,6 +32,7 @@ $(document).ready(function() {
 
 
     console.log(itinerary.events);
+
     function get_calendar_height() {
         console.log($('#main-left').height());
         return $('#main-left').height();
@@ -82,7 +83,6 @@ $(document).ready(function() {
         },
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
-
 
         eventDrop: function(event, dayDelta, minuteDelta ) {
 
