@@ -69,6 +69,7 @@ $(document).ready(function() {
 
         //We need to get the dates from here and save it as day, month, and year
 
+                
 
         var itineraryID = locID+ ';'+startYear+'/'+startMonth+'/'+startDay+'-'+endYear+'/'+endMonth+'/'+endDay;
         var arrayofEvents = new Array();
@@ -76,13 +77,13 @@ $(document).ready(function() {
         console.dir(locID);
 
 
-        store.set(itineraryID, {city: cityName, country: countryName, 
+        store.set(itineraryID, {locid: locID, city: cityName, country: countryName, 
         sDay: startDay, sMonth: startMonth, sYear: startYear, 
         eDay: endDay, eMonth: endMonth, eYear: endYear, startD: startDate, endD: endDate, 
         events: arrayofEvents });
 
         window.location = 'day.html?id=' + itineraryID;
-        
+
 
     }); //end add-button function
 

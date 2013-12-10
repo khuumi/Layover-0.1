@@ -1,5 +1,15 @@
 $(document).ready(function() {
     init()
+
+    $('.input-daterange').datepicker({
+        format: 'yyyy-mm-dd',
+        startDate: (new Date()).toString()
+        // orientation: "bottom auto"   
+    });
+
+    $('.input-daterange').datepicker().on('changeDate', function(){
+        $(this).blur();
+    });
     function init() {
         if (!store.enabled) {
             alert('Local storage is not supported by your browser. Please disabled "Private Mode", or upgrade to a modern browser')
@@ -45,15 +55,7 @@ $(document).ready(function() {
         $('#start_date_edit').datepicker();
         $('#end_date_edit').datepicker();
 
-        $('.input-daterange').datepicker({
-        format: 'yyyy-mm-dd',
-        startDate: (new Date()).toString()
-        // orientation: "bottom auto"   
-    });
-
-    $('.input-daterange').datepicker().on('changeDate', function(){
-        $(this).blur();
-    });
+        
 
     $('.save-button').click(function(){
     
@@ -73,6 +75,8 @@ $(document).ready(function() {
             return false;
         };
 
+        var locID = id.locID;
+
         var sDate = new Date(startDate);
         var eDate = new Date(endDate);
 
@@ -88,8 +92,11 @@ $(document).ready(function() {
 
         var arrayofEvents = new Array();
 
+        var itineraryID = locID+ ';'+startYear+'/'+startMonth+'/'+startDay+'-'+endYear+'/'+endMonth+'/'+endDay;
 
-        store.set(itID, {city: id.city, country: id.country, 
+
+
+        store.set(itineraryID, {locid: id.locid, city: id.city, country: id.country, 
         sDay: startDay, sMonth: startMonth, sYear: startYear, 
         eDay: endDay, eMonth: endMonth, eYear: endYear, startD: startDate, endD: endDate, 
         events: id.events });
