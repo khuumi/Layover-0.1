@@ -480,7 +480,8 @@ $(document).ready(function() {
                 title: response.name,
                 description: '',
                 'marker-size': 'large',
-                'marker-color': '#5E9DC8'
+                'marker-color': '#5E9DC8',
+                'marker-symbol': 'circle-stroked'
             }
         }).addTo(map);
     }
