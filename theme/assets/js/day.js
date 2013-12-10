@@ -26,7 +26,6 @@ $(document).ready(function() {
 
     $('#header-itinerary').html(id.city + ', ' + id.country + ' (' + id.startD + ' - ' + id.endD + ')');
 
-
     var itinerary = store.get(itID);
 
     for(var i in itinerary.events){
@@ -70,9 +69,9 @@ $(document).ready(function() {
             var venue_id = calEvent.venueID;
             console.log(calEvent);
 
-            getVenueInfo(venue_id, function(response) {
+            getVenueInfo(venue_id, function(reply) {
                 $('<button class="delete-event" id="'+ event_id +'">Delete</button>').appendTo('#delete_div');
-                addMap(response);
+                addMap(reply);
 
                 $('.delete-event').click(function() {
                 var eid = $(this).attr('id');
@@ -82,35 +81,21 @@ $(document).ready(function() {
                     type:'confirmation',
                     buttons: [
                         {addClass: 'confirm-btn', text: 'Ok', onClick: function($noty) {
-                                $('#calendar').fullCalendar( 'removeEvents', eid );
-                                $.fancybox.close();
-                                $noty.close();
+                            $('#calendar').fullCalendar( 'removeEvents', eid );
+                            $.fancybox.close();
+                            $noty.close();
                             }   
                         },
                         {addClass: 'confirm-btn', text: 'Cancel', onClick: function($noty) {
-                                $noty.close();
+                            $noty.close();
                         }
-                    }],
-                    killer: true
+                        }],
+                        killer: true
+                    });
                 });
-            });
 
             $('#popup-link').trigger('click');
             });
-            // console.dir('info:');
-                // console.dir(response);
-                // console.dir('info:');
-                // console.dir(response);
-                //var venue_info = parseInfo(response);
-                //$('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
-                //addMap(response);
-            // addDeleteButton(event);
-            // $('<button class="delete-event" id="'+ event_id +'">Delete</button>').appendTo('#popup');
-            // $('#delete_div').innerHTML = button_str;
-            // console.dir(button_str);
-
-            
-
         },
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -259,7 +244,7 @@ $(document).ready(function() {
                         //set variables
                         var venue_name = venue.name;
                         var venue_id = venue.id;
-                        var address = typeof venue.location.address !== "undefined" ? venue.location.address + "<br>" : "";
+                        var address = typeof venue.location.address !== "undefined" ? venue.location.address : "";
                         address += typeof venue.location.crossStreet !== "undefined" ? " (" + venue.location.crossStreet + ")" : "";
 
                         // var rating = typeof venue.rating !== undefined ? venue.rating : "N/A";
@@ -274,8 +259,8 @@ $(document).ready(function() {
                         //var detail = info.url;
 
                         var $row = $('<hr/><a class="fancybox" href="#popup"><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
-                            '.</div><div class=\"list-middle\"><span class="venue-name"><b>' + venue_name + '</b></span><br><small>' + address + category + 
-                            '<p>' + rating + '</p></div><div class=\"list-right\">' +
+                            '.</div><div class=\"list-middle\"><span class="venue-name"><b>' + venue_name + '</b></span><br><small>' + address + '<br>' + category + 
+                            '<p>' + rating + '</p></small></div><div class=\"list-right\">' +
                             '<img class="bordered" src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div>'+'</div></a>');
                         $('#result').append($row);
                         count += 1;
@@ -288,8 +273,6 @@ $(document).ready(function() {
                         venueID: $(this).attr('id')
                     };
                     
-
-
                     // store the Event Object in the DOM element so we can get to it later
                     $(this).data('eventObject', eventObject);
 
@@ -315,7 +298,7 @@ $(document).ready(function() {
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
                     getVenueInfo(venue_id, function(reply){
-
+                        addMap(reply);
                     }); // end getVenueInfo function
                 }); //end event click function
             }
@@ -329,7 +312,7 @@ $(document).ready(function() {
             console.dir(response);
             var venue_info = parseInfo(response);
             $('#popup').html(venue_info);
-            addMap(response);
+            //addMap(response);
             return callback(response);
         });
         
@@ -370,9 +353,9 @@ $(document).ready(function() {
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
-        var str = venue_name + '<div id = "delete_div"></div><br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
+        var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
-        var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
+        var output = '<div class="popup-left">' + str + '<p><div id = "delete_div"></div></p></div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
     } //end parseInfo
 
