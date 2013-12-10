@@ -252,22 +252,22 @@ $(document).ready(function() {
                     for (var i in reply) {
                         var venue = "";
                         var venue = reply[i].venue;
-                        var venue_img = typeof venue.photos.groups[0] !== "undefined" ? venue.photos.groups[0].items[0].prefix + 
+                        var venue_img = typeof venue.photos.groups[0] !== undefined ? venue.photos.groups[0].items[0].prefix + 
                         "300x300" + venue.photos.groups[0].items[0].suffix : "error.jpg";
 
                         //set variables
                         var venue_name = venue.name;
                         var venue_id = venue.id;
-                        var address = typeof venue.location.address !== "undefined" ? venue.location.address + "<br>" : "";
-                        address += typeof venue.location.crossStreet !== "undefined" ? " (" + venue.location.crossStreet + ")" : "";
+                        var address = typeof venue.location.address !== undefined ? venue.location.address + "<br>" : "";
+                        address += typeof venue.location.crossStreet !== undefined ? " (" + venue.location.crossStreet + ")" : "";
 
-                        // var rating = typeof venue.rating !== "undefined" ? venue.rating : "N/A";
-                        var rating = typeof venue.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
+                        // var rating = typeof venue.rating !== undefined ? venue.rating : "N/A";
+                        var rating = typeof venue.rating !== undefined ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
                         'Rating: <span itemprop="ratingValue" style="display:none">' + (venue.rating) + '</span> <i class="icon-star"></i><i class="icon-star"></i>' +
                         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 
 
-                        var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
+                        var category = typeof venue.categories[0] !== undefined ? venue.categories[0].shortName : "Uncategorized";
 
                         //var $detail = $();
                         //var detail = info.url;
@@ -363,26 +363,30 @@ $(document).ready(function() {
         var venue_name = '<span class="venue-name"><b>' + info.name + '</b></span>';
         var venue_categories = '';
         var i = 0;
-        if (info.categories !== "undefined")
+        if (info.categories !== undefined) {
             for (i=0; i<info.categories.length; i++) {
                 venue_categories = venue_categories + info.categories[i].name + (i !== info.categories.length - 1 ? ', ' : '');
             }
+        }
 
-        var address = typeof info.location.address !== "undefined" ? info.location.address : "";
-            address += typeof info.location.crossStreet !== "undefined" ? " (" + info.location.crossStreet + ")" : "";
-            address += typeof info.location.city !== "undefined" ? ", " + info.location.city : "";
-            address += typeof info.location.state !== "undefined" ? ", " + info.location.state : (typeof info.location.country !== "undefined" ? ", " + info.location.country : "");
-            address += typeof info.location.postalCode !== "undefined" ? " " + info.location.postalCode : "";
+        var address = "";
+        if (info.location !== undefined) {
+            address = typeof info.location.address !== undefined ? info.location.address : "";
+            address += typeof info.location.crossStreet !== undefined ? " (" + info.location.crossStreet + ")" : "";
+            address += typeof info.location.city !== undefined ? ", " + info.location.city : "";
+            address += typeof info.location.state !== undefined ? ", " + info.location.state : (typeof info.location.country !== undefined ? ", " + info.location.country : "");
+            address += typeof info.location.postalCode !== undefined ? " " + info.location.postalCode : "";
+        }
 
-        var phone = typeof info.contact !== "undefined" ? '<span class="glyphicon glyphicon-earphone"></span>' + info.contact.formattedPhone : "";
+        var phone = typeof info.contact !== undefined ? '<span class="glyphicon glyphicon-earphone"></span>' + info.contact.formattedPhone : "";
 
-        var url = typeof info.url !== "undefined" ? ('<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>') : ('<a href=\"' + info.shortUrl + '\" target=\"_blank\">' + info.shortUrl + '</a>');
+        var url = typeof info.url !== undefined ? ('<a href=\"' + info.url + '\" target=\"_blank\">' + info.url + '</a>') : ('<a href=\"' + info.shortUrl + '\" target=\"_blank\">' + info.shortUrl + '</a>');
 
-        var hours = typeof info.hours !== "undefined" ? info.hours.status : "";
+        var hours = typeof info.hours !== undefined ? info.hours.status : "";
 
-        var menus = typeof info.menu !== "undefined" ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : "";
+        var menus = typeof info.menu !== undefined ? '<a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : "";
 
-        var rating = typeof info.rating !== "undefined" ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
+        var rating = typeof info.rating !== undefined ? '<div class="rating" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">' + 
         '<span itemprop="ratingValue">' + (info.rating) + '</span> /10 <i class="icon-star"></i><i class="icon-star"></i>' +
         '<i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-half"></i>' + '</div>' : "";
 

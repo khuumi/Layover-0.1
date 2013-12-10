@@ -285,14 +285,21 @@ h2 {
 /*===============
    Day view page
   ===============*/
+html, body {
+    height: 100%;
+}
+
 #wrapper {
     width: 1000px;
     margin: 0 auto;
+    position: relative;
+    height: 100%;
 }
 
 #main-left {
-    float: left;
-    width: 430px;
+    /*float: left;*/
+    width: 425px;
+    /*height: auto;*/
     height: auto;
     top: 0;
     bottom: 0;
@@ -302,22 +309,22 @@ h2 {
     background: #eee;
     box-shadow: 0 0 3px #333;
     font-family: 'arial';
-    position: fixed;
+    position: absolute;
 }
 
 #main-right {
-    float: right;
     width: 500px;
-    min-height: 530px;
-    /*overflow: auto;
+    /*min-height: 530px;*/
     height: auto;
-    bottom: 0;*/
+    top: 0;
+    bottom: 0;
     /*position: fixed;*/
-    margin: 70px 5px 20px;
+    margin: 70px 5px 20px 470px;
     padding: 10px;
     border: 1px solid #333;
     background: #eee;
     box-shadow: 0 0 3px #333;
+    position: absolute;
 }
 
 #search-form {
@@ -381,7 +388,7 @@ h2 {
 }
 .message {
     text-align: left;
-    margin: 170px auto;
+    margin: 230px auto;
     margin-left: 75px;
     color: #999;
     font-size: 20px;
