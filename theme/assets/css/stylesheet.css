@@ -459,6 +459,11 @@ p {
     height: 400px;
 }
 
+.popup-left b {
+    color: #2fa4e7;
+    font-size: 20px;
+}
+
 .popup-right {
     float: right;
     position: relative;

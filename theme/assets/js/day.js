@@ -1,6 +1,6 @@
 var foursquare = new Foursquare;
-foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
-//foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
+//foursquare.setClientID("ZWOHYPAJV1ST0JXJKCBNYRQTKTQVSZA0F5442IEUSLVIJDZT", "22Y31QA5Q53OUCF4LRVTMT0XLEHKOCKKXFWPQMKJAM44UF3P");
+foursquare.setClientID("U5OHF02BYSKE2IY2U0XQUHCLQHWHRDYD5UMPSBEEYXJVP0ST", "KVNMWNIISEF3VJFH1YP2SSC35TKUZQGHXNCE3NCQICSKFJXA");
 foursquare.setURL("https://api.foursquare.com/v2/");
 foursquare.setVersionParameter("20131205");
 
@@ -71,7 +71,11 @@ $(document).ready(function() {
 
                 // console.dir('info:');
                 // console.dir(response);
-                $('#calendar-popup').html(response.contact.formattedPhone + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+                console.dir('venue info:');
+                console.dir(response);
+                var venue_info = parseInfo(response);
+                $('#calendar-popup').html(venue_info + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
+                addMap(response);
 
                 $('.delete-event').click(function() {
                     var r = confirm('Are you sure you want to remove this event from your schedule?');
@@ -375,32 +379,32 @@ $(document).ready(function() {
                     venue_id = $(this).attr('id');
                     console.log(venue_id);
                     getVenueInfo(venue_id, function(response) {
-                        console.dir('venue info:');
-                        console.dir(response);
-                        var venue_info = parseInfo(response);
-                        $('#popup').html(venue_info);
-                        var lat = response.location.lat;
-                        var lng = response.location.lng;
+                        // console.dir('venue info:');
+                        // console.dir(response);
+                        // var venue_info = parseInfo(response);
+                        // $('#popup').html(venue_info);
+                        // var lat = response.location.lat;
+                        // var lng = response.location.lng;
                         
-                        // map.markerLayer.setGeoJSON(geoJson);
-                        var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
-                            maxZoom:15,
-                            attributionControl:false
-                        }).setView([lat, lng], 14);
-                        L.mapbox.markerLayer({
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [lng, lat]
-                            },
-                            properties: {
-                                title: response.name,
-                                description: '',
-                                'marker-size': 'large',
-                                'marker-color': '#5E9DC8',
-                                'marker-symbol': 'circle'
-                            }
-                        }).addTo(map);
+                        // // map.markerLayer.setGeoJSON(geoJson);
+                        // var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+                        //     maxZoom:15,
+                        //     attributionControl:false
+                        // }).setView([lat, lng], 14);
+                        // L.mapbox.markerLayer({
+                        //     type: 'Feature',
+                        //     geometry: {
+                        //         type: 'Point',
+                        //         coordinates: [lng, lat]
+                        //     },
+                        //     properties: {
+                        //         title: response.name,
+                        //         description: '',
+                        //         'marker-size': 'large',
+                        //         'marker-color': '#5E9DC8',
+                        //         'marker-symbol': 'circle'
+                        //     }
+                        // }).addTo(map);
                         // console.dir('info:');
                         // console.dir(response);
                         //$('#popup').html(response.contact.formattedPhone);
@@ -415,13 +419,51 @@ $(document).ready(function() {
     function getVenueInfo(venue_id, callback) {
         var url = '';
         foursquare.get_venue ({q: venue_id}, function(response) {
+            console.dir('venue info:');
+            console.dir(response);
+            var venue_info = parseInfo(response);
+            $('#popup').html(venue_info);
+            addMap(response);
             return callback(response);
         });
     }
 
     function parseInfo(info) {
-        var output = '<div class="popup-left"></div><div class="popup-right"><div id="map" class="map"></div></div>';
+        var venue_name = '<span class="venue-name"><b>' + info.name + '</b></span>';
+        var venue_categories = '';
+        var i = 0;
+        for (i=0; i<info.categories.length; i++) {
+            console.dir(info.categories[i].name);
+            venue_categories = venue_categories + info.categories[i].name + (i !== info.categories.length - 1 ? ', ' : '');
+        }
+
+        var str = venue_name + '<br>' + venue_categories;
+
+        var output = '<div class="popup-left">' + str + '</div><div class="popup-right"><div id="map" class="map"></div></div>';
         return output;
+    }
+
+    function addMap(response) {
+        var lat = response.location.lat;
+        var lng = response.location.lng;
+        
+        var map = L.mapbox.map('map', 'jameshong.ggk4nail', {
+            maxZoom:15,
+            attributionControl:false
+        }).setView([lat, lng], 14);
+        L.mapbox.markerLayer({
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [lng, lat]
+            },
+            properties: {
+                title: response.name,
+                description: '',
+                'marker-size': 'large',
+                'marker-color': '#5E9DC8'
+            }
+        }).addTo(map);
     }
 });
 
