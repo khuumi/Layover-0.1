@@ -24,13 +24,23 @@ $(document).ready(function() {
 
     var itinerary = store.get(itID);
 
+    for(var i in itinerary.events){
+        itinerary.events[i].start = new Date(itinerary.events[i].start);
+        itinerary.events[i].end = new Date(itinerary.events[i].end);
+    }
+
+
+
+    //console.log(itinerary.events);
+
     function get_calendar_height() {
-        console.log($('#main-left').height());
         return $('#main-left').height();
     }
-    $(window).resize(function() {
-        $('#calendar').fullCalendar('option', 'height', get_calendar_height());
-    });
+
+    // dynamic calendar resize -- messes up resizing events for some reason
+    // $(window).resize(function() {
+    //     $('#calendar').fullCalendar('option', 'height', get_calendar_height());
+    // });
 
     /* Fullcalender init */
     $('#calendar').fullCalendar({
@@ -41,9 +51,10 @@ $(document).ready(function() {
              right:  'next'
          },
         defaultView: 'agendaDay',
+        events: itinerary.events, 
         allDaySlot: false,
-        height: get_calendar_height(),
         editable: true,
+        height: get_calendar_height(),
         slotEventOverlap: false,
 
         eventClick: function(calEvent, jsEvent, view) {
@@ -54,6 +65,7 @@ $(document).ready(function() {
             $('#calendar-popup').html('<div class="popup-loading"><img src="assets/img/venue-loading.gif"></div>');
             var event_id = calEvent._id;
             var venue_id = calEvent.venueID;
+            console.log(calEvent);
 
             getVenueInfo(venue_id, function(response) {
 
@@ -62,9 +74,12 @@ $(document).ready(function() {
                 $('#calendar-popup').html(response.contact.formattedPhone + '<br/><button class="delete-event" id="'+ event_id +'">Delete</button>');
 
                 $('.delete-event').click(function() {
-                    var eid = $(this).attr('id');
-                    $('#calendar').fullCalendar( 'removeEvents', eid );
-                    $.fancybox.close();
+                    var r = confirm('Are you sure you want to remove this event from your schedule?');
+                    if (r == true) {
+                        var eid = $(this).attr('id');
+                        $('#calendar').fullCalendar( 'removeEvents', eid );
+                        $.fancybox.close();
+                    }
                 });
             });
 
@@ -73,10 +88,114 @@ $(document).ready(function() {
         },
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
+
+        eventDrop: function(event, dayDelta, minuteDelta ) {
+
+            //weird bug whenever I try to change an event that I made this session. 
+
+            var itObj = store.get(itID);
+            console.log(itObj);
+
+
+            for (var i in itObj.events){
+
+
+                if(itObj.events[i]._id == event._id)
+                {
+
+
+                    var end = new Date(itObj.events[i].end);
+                   // end.setMinutes(end.getMinutes() + minuteDelta);
+
+                    curMin = end.getMinutes();
+
+
+                    console.log("currentMin = " +curMin);
+
+                    console.log("minuteDelta  = " +minuteDelta);
+                    
+                    end.setMinutes(minuteDelta + curMin);
+
+                    newEnd = end.toUTCString();
+                    console.log(newEnd);
+                        console.log("hello");
+
+                    var myEvent = { id: event._id, title: event.title, start: event.start, end: newEnd, allDay: false};
+
+                    // itObj.events[i].end = event.end.toUTCString();
+                    // itObj.events[i].start = event.start.toUTCString();
+
+
+                    console.log("hello");
+                    itObj.events.splice(i, 1);
+                    itObj.events.push(myEvent);
+                    store.remove(itID);
+                    store.set(itID, itObj);
+
+                }
+            }
+
+        }, 
+
+
+
+
+        eventResize: function(event, dayDelta, minuteDelta){
+
+            //weird bug whenever I try to change an event that I made this session. 
+
+            var itObj = store.get(itID);
+            console.log(itObj);
+
+
+            for (var i in itObj.events){
+
+
+                if(itObj.events[i]._id == event._id)
+                {
+
+
+                    var end = new Date(itObj.events[i].end);
+                   // end.setMinutes(end.getMinutes() + minuteDelta);
+
+                    curMin = end.getMinutes();
+
+
+                    console.log("currentMin = " +curMin);
+
+                    console.log("minuteDelta  = " +minuteDelta);
+                    
+                    end.setMinutes(minuteDelta + curMin);
+
+                    newEnd = end.toUTCString();
+                    console.log(newEnd);
+                        console.log("hello");
+
+                    var myEvent = { id: event._id, title: event.title, start: event.start, end: newEnd, allDay: false};
+
+                    // itObj.events[i].end = event.end.toUTCString();
+                    // itObj.events[i].start = event.start.toUTCString();
+
+
+                    console.log("hello");
+                    itObj.events.splice(i, 1);
+                    itObj.events.push(myEvent);
+                    store.remove(itID);
+                    store.set(itID, itObj);
+
+                }
+            }
+
+        }, 
+
+
+
         drop: function(date, allDay, jsEvent, ui) { // this function is called when something is dropped
         
             // retrieve the dropped element's stored Event Object
             var originalEventObject = $(this).data('eventObject');
+
+            //console.log($(this).data('eventObject'));
             
             // we need to copy it, so that multiple events don't have a reference to the same object
             var copiedEventObject = $.extend({}, originalEventObject);
@@ -91,6 +210,29 @@ $(document).ready(function() {
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
             $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
             
+            var eventObject = $(this).data('eventObject');
+
+            console.log(date.toUTCString());
+
+
+            //The event object that will get populated to our array
+            var myEvent = { _id: eventObject._id, venueID: eventObject.venueID, title: eventObject.title, start: copiedEventObject.start.toUTCString(), end: copiedEventObject.end.toUTCString(), allDay: false};
+
+            console.log(myEvent);
+            // console.dir(myEvent);
+
+            // console.log(date);
+
+            //We need to get the object from localstorage, push the event object to array,
+            //After that remove the old object from localstorage and set the new object. 
+            var itObj = store.get(itID);
+            itObj.events.push(myEvent);
+            store.remove(itID);
+            store.set(itID, itObj);
+
+            console.log(store.get(itID));
+
+
         }
     });
 
@@ -200,8 +342,12 @@ $(document).ready(function() {
                         venueID: $(this).attr('id')
                     };
                     
+
+
                     // store the Event Object in the DOM element so we can get to it later
                     $(this).data('eventObject', eventObject);
+
+                    console.dir(eventObject);
                     
                     // make the event draggable using jQuery UI
                     $(this).draggable({
@@ -264,14 +410,6 @@ $(document).ready(function() {
         );
     });
 
-
-    $('#placeholder').click(function() {
-        getVenueInfo(venue_id, function(response) {
-            console.dir('venue info:');
-            console.dir(response);
-            $('#popup').html(response.contact.formattedPhone);
-        });
-    });
 
     // Return venue information by calling get_venue function
     function getVenueInfo(venue_id, callback) {
