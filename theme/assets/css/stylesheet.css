@@ -205,12 +205,12 @@ p {
     display: inline-block;
     margin: 5px;
 }
-#delete-button:hover {
+/*#delete-button:hover {
     cursor: pointer;
     border: 1px solid #0C4D7A;
     background: #1869A3;
     color: white;
-}
+}*/
 
 #add-button:hover {
     cursor: pointer;
@@ -430,6 +430,11 @@ p {
 .fancybox:hover {
     color: #333;
 }
+
+#calendar-popup-link {
+    display: none;
+}
+
 
 
 /******** TEMPORARY **********/
