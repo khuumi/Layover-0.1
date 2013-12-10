@@ -93,111 +93,6 @@ $(document).ready(function() {
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
 
-        eventDrop: function(event, dayDelta, minuteDelta ) {
-
-            //weird bug whenever I try to change an event that I made this session. 
-
-            var itObj = store.get(itID);
-            console.log(itObj);
-
-
-            for (var i in itObj.events){
-
-                console.log(event._id);
-                if(itObj.events[i]._id == event._id)
-                {
-
-                    end = new Date(itObj.events[i].end);
-                   // end.setMinutes(end.getMinutes() + minuteDelta);
-                   // start = new Date(itObj.events[i].end);
-
-                    curMin = end.getMinutes();
-
-
-                    console.log("currentMin = " +curMin);
-
-                    console.log("minuteDelta  = " +minuteDelta);
-                    
-                    end.setMinutes(minuteDelta + curMin);
-
-                    newEnd = end.toUTCString();
-                    newStart = start.toUTCString();
-                    console.log(newEnd);
-                        console.log("hello");
-
-                    console.log(event.start + "\t" +newEnd);
-
-                    var myEvent = { venueID: event.venueID, title: event.title, start: newStart, end: newEnd, allDay: false};
-
-                    // itObj.events[i].end = event.end.toUTCString();
-                    // itObj.events[i].start = event.start.toUTCString();
-
-
-                    console.log("hello");
-                    itObj.events.splice(i, 1);
-                    itObj.events.push(myEvent);
-                    store.remove(itID);
-                    store.set(itID, itObj);
-
-                }
-            }
-
-        }, 
-
-
-
-
-        eventResize: function(event, dayDelta, minuteDelta){
-
-            //weird bug whenever I try to change an event that I made this session. 
-
-
-            var itObj = store.get(itID);
-            console.log(itObj);
-
-
-            for (var i in itObj.events){
-
-
-                if(itObj.events[i]._id == event._id)
-                {
-
-                    var end = new Date(itObj.events[i].end);
-                  //  var start = new Date(itObj.events[i].end);
-                   // end.setMinutes(end.getMinutes() + minuteDelta);
-
-                    curMin = end.getMinutes();
-
-
-                    console.log("currentMin = " +curMin);
-
-                    console.log("minuteDelta  = " +minuteDelta);
-                    
-                     end.setMinutes(minuteDelta + curMin);
-
-                    newEnd = end.toUTCString();
-                    newStart = start.toUTCString();
-                    console.log(newEnd);
-                    console.log("hello");
-
-                    var myEvent = { venueID: event.venueID, title: event.title, start: newStart, end: newEnd, allDay: false};
-
-                    // itObj.events[i].end = event.end.toUTCString();
-                    // itObj.events[i].start = event.start.toUTCString();
-
-
-                    console.log("hello");
-                    itObj.events.splice(i, 1);
-                    itObj.events.push(myEvent);
-                    store.remove(itID);
-                    store.set(itID, itObj);
-
-                }
-            }
-
-        }, 
-
-
 
         drop: function(date, allDay, jsEvent, ui) { // this function is called when something is dropped
         
@@ -220,35 +115,43 @@ $(document).ready(function() {
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
             $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
             
-            var eventObject = $(this).data('eventObject');
 
 
-            console.log(copiedEventObject);
+        },
 
-            console.log("Newly added start and end date");
-            console.log(copiedEventObject.start.toUTCString());
-            console.log(copiedEventObject.end.toUTCString());
+        eventAfterAllRender: function() { 
 
-           // console.log(eventObject._id);
-
-            //The event object that will get populated to our array
-            var myEvent = { venueID: eventObject.venueID, title: eventObject.title, start: copiedEventObject.start.toUTCString(), end: copiedEventObject.end.toUTCString(), allDay: false};
-
-
-            console.log(myEvent);
-            // console.dir(myEvent);
-
-            // console.log(date);
-
-            //We need to get the object from localstorage, push the event object to array,
-            //After that remove the old object from localstorage and set the new object. 
             var itObj = store.get(itID);
-            itObj.events.push(myEvent);
+
+            var events = $('#calendar').fullCalendar('clientEvents');
+
+            var newEvents = new Array();
+
+            for (var i in events)
+            {
+                console.log(events[i]);
+                var myEvent =  {};
+
+                myEvent.venueID = events[i].venueID;
+                myEvent.title = events[i].title;
+                myEvent._id = events[i]._id;
+
+                myEvent.start = events[i].start.toUTCString();
+                myEvent.end = events[i].end.toUTCString();
+                myEvent.allDay = events[i].allDay;
+
+                newEvents.push(myEvent);
+            }
+
+
+            itObj.events = newEvents; 
+
+
+            console.log("event is");
+            console.log(event);
+
             store.remove(itID);
             store.set(itID, itObj);
-
-            console.log(store.get(itID));
-
 
         }
     });
