@@ -160,15 +160,18 @@ $(document).ready(function() {
                         var rating = typeof venue.rating !== "undefined" ? venue.rating : "N/A";
                         var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
 
+                        //var $detail = $();
+                        
+                        //var detail = info.url;
+
                         var $row = $('<hr/><a class="fancybox" href="#popup"><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
                             '.</div><div class=\"list-middle\"><span class="venue-name"><b>' + venue_name + '</b></span><br><small>' + address + category + 
                             ' (rating: ' + rating + ')</small>' + '</div><div class=\"list-right\">' +
-                            '<img class="bordered" src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div><div class="extra-data">'+ venue_name +'</div></div></a>');
+                            '<img class="bordered" src=\"' + venue_img + '\" onerror="this.style.display=\'none\'" width=120px height=120px border=\"0\"></div>'+'</div></a>');
                         $('#result').append($row);
                         count += 1;
                     }
                 }
-                
 
                 $('.event').each(function() {
                     var eventObject = {
@@ -182,14 +185,15 @@ $(document).ready(function() {
                     // make the event draggable using jQuery UI
                     $(this).draggable({
                         zIndex: 999,
-                        revert: true,      // will cause the event to go back to its
+                        revert: true,        // will cause the event to go back to its
                         revertDuration: 0.5  //  original position after the drag
                     });
 
                 });
 
                 $('.event').click(function() {
-                    var info = $(this).find('.extra-data').text();
+                    var info = getVenueInfo(venue_id);
+                    //$(this).find('.extra-data').text();
                     console.log(info);
                     $('#popup').html(info);
                 });
@@ -198,13 +202,25 @@ $(document).ready(function() {
 
     });
 
-    // /* Test render events */
-    // $('#test1').click(function() {
-    //     $('#calendar').fullCalendar('renderEvent', test1, true);
-    // });
-    // $('#test2').click(function() {
-    //     $('#calendar').fullCalendar('renderEvent', test2, true);
-    // });
+
+    $('#placeholder').click(function() {
+        var info = getVenueInfo(venue_id);
+        //$(this).find('.extra-data').text();
+        console.log(info);
+        $('#popup').html(info);
+    })
+
+    // Return venue information by calling get_venue function
+    function getVenueInfo(venue_id) {
+        var url = '';
+        foursquare.get_venue (
+            {q: venue_id}, function(response) {
+                console.dir(response);
+                url = response.contact.formattedPhone;
+                console.dir(url);
+            });
+        return url;
+    }
 });
 
 

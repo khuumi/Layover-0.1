@@ -73,6 +73,7 @@ var Foursquare = function () {
     var get_venue = function (params, callback) {
         var query = build_query(params);
         var method = "venues/" + query + "?";
+        
         this._call(method, function(reply) {callback(reply.response.venue)});
     }
 
