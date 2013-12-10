@@ -24,6 +24,16 @@ $(document).ready(function() {
 
     var itinerary = store.get(itID);
 
+    for(var i in itinerary.events){
+        itinerary.events[i].start = new Date(itinerary.events[i].start);
+        itinerary.events[i].end = new Date(itinerary.events[i].end);
+    }
+
+
+
+    console.log(itinerary.events);
+
+
     function get_calendar_height() {
         console.log($('#main-left').height());
         return $('#main-left').height();
@@ -73,10 +83,113 @@ $(document).ready(function() {
         },
 
         droppable: true, // this allows things to be dropped onto the calendar !!!
+        eventDrop: function(event, dayDelta, minuteDelta ) {
+
+            //weird bug whenever I try to change an event that I made this session. 
+
+            var itObj = store.get(itID);
+            console.log(itObj);
+
+
+            for (var i in itObj.events){
+
+
+                if(itObj.events[i].id == event.id)
+                {
+
+
+                    var end = new Date(itObj.events[i].end);
+                   // end.setMinutes(end.getMinutes() + minuteDelta);
+
+                    curMin = end.getMinutes();
+
+
+                    console.log("currentMin = " +curMin);
+
+                    console.log("minuteDelta  = " +minuteDelta);
+                    
+                    end.setMinutes(minuteDelta + curMin);
+
+                    newEnd = end.toUTCString();
+                    console.log(newEnd);
+                        console.log("hello");
+
+                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
+
+                    // itObj.events[i].end = event.end.toUTCString();
+                    // itObj.events[i].start = event.start.toUTCString();
+
+
+                    console.log("hello");
+                    itObj.events.splice(i, 1);
+                    itObj.events.push(myEvent);
+                    store.remove(itID);
+                    store.set(itID, itObj);
+
+                }
+            }
+
+        }, 
+
+
+
+
+        eventResize: function(event, dayDelta, minuteDelta){
+
+            //weird bug whenever I try to change an event that I made this session. 
+
+            var itObj = store.get(itID);
+            console.log(itObj);
+
+
+            for (var i in itObj.events){
+
+
+                if(itObj.events[i].id == event.id)
+                {
+
+
+                    var end = new Date(itObj.events[i].end);
+                   // end.setMinutes(end.getMinutes() + minuteDelta);
+
+                    curMin = end.getMinutes();
+
+
+                    console.log("currentMin = " +curMin);
+
+                    console.log("minuteDelta  = " +minuteDelta);
+                    
+                    end.setMinutes(minuteDelta + curMin);
+
+                    newEnd = end.toUTCString();
+                    console.log(newEnd);
+                        console.log("hello");
+
+                    var myEvent = { id: event.id, title: event.title, start: event.start, end: newEnd, allDay: false};
+
+                    // itObj.events[i].end = event.end.toUTCString();
+                    // itObj.events[i].start = event.start.toUTCString();
+
+
+                    console.log("hello");
+                    itObj.events.splice(i, 1);
+                    itObj.events.push(myEvent);
+                    store.remove(itID);
+                    store.set(itID, itObj);
+
+                }
+            }
+
+        }, 
+
+
+
         drop: function(date, allDay, jsEvent, ui) { // this function is called when something is dropped
         
             // retrieve the dropped element's stored Event Object
             var originalEventObject = $(this).data('eventObject');
+
+            //console.log($(this).data('eventObject'));
             
             // we need to copy it, so that multiple events don't have a reference to the same object
             var copiedEventObject = $.extend({}, originalEventObject);
@@ -91,6 +204,29 @@ $(document).ready(function() {
             // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
             $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
             
+            var eventObject = $(this).data('eventObject');
+
+            console.log(date.toUTCString());
+
+
+            //The event object that will get populated to our array
+            var myEvent = { id: eventObject.venueID, title: eventObject.title, start: copiedEventObject.start.toUTCString(), end: copiedEventObject.end.toUTCString(), allDay: false};
+
+            console.log(myEvent);
+            // console.dir(myEvent);
+
+            // console.log(date);
+
+            //We need to get the object from localstorage, push the event object to array,
+            //After that remove the old object from localstorage and set the new object. 
+            var itObj = store.get(itID);
+            itObj.events.push(myEvent);
+            store.remove(itID);
+            store.set(itID, itObj);
+
+            console.log(store.get(itID));
+
+
         }
     });
 
