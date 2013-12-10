@@ -146,7 +146,6 @@ $(document).ready(function() {
                 else {
                     for (var i in reply) {
                         var venue = "";
-                        console.dir(reply[i].venue);
                         var venue = reply[i].venue;
                         var venue_img = typeof venue.photos.groups[0] !== "undefined" ? venue.photos.groups[0].items[0].prefix + 
                         "300x300" + venue.photos.groups[0].items[0].suffix : "error.jpg";
@@ -161,7 +160,6 @@ $(document).ready(function() {
                         var category = typeof venue.categories[0] !== "undefined" ? venue.categories[0].shortName : "Uncategorized";
 
                         //var $detail = $();
-                        
                         //var detail = info.url;
 
                         var $row = $('<hr/><a class="fancybox" href="#popup"><div class=\"list-row event\" id=\"' + venue_id + '\">' + '<div class=\"list-left\">' + count +
@@ -192,10 +190,13 @@ $(document).ready(function() {
                 });
 
                 $('.event').click(function() {
-                    var info = getVenueInfo(venue_id);
-                    //$(this).find('.extra-data').text();
-                    console.log(info);
-                    $('#popup').html(info);
+                    console.dir('in event')
+                    getVenueInfo(venue_id, function(response) {
+
+                        console.dir('info:');
+                        console.dir(response);
+                        $('#popup').html(response.contact.formattedPhone);
+                    });
                 });
             }
         );
@@ -204,22 +205,22 @@ $(document).ready(function() {
 
 
     $('#placeholder').click(function() {
-        var info = getVenueInfo(venue_id);
-        //$(this).find('.extra-data').text();
-        console.log(info);
-        $('#popup').html(info);
-    })
+        console.dir('in event')
+        getVenueInfo(venue_id, function(response) {
+
+            console.dir('info:');
+            console.dir(response);
+            $('#popup').html(response.contact.formattedPhone);
+        });
+    });
 
     // Return venue information by calling get_venue function
-    function getVenueInfo(venue_id) {
+    function getVenueInfo(venue_id, callback) {
         var url = '';
         foursquare.get_venue (
             {q: venue_id}, function(response) {
-                console.dir(response);
-                url = response.contact.formattedPhone;
-                console.dir(url);
+                return callback(response);
             });
-        return url;
     }
 });
 
