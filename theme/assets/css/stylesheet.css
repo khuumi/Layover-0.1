@@ -524,3 +524,21 @@ h2 {
     margin-top: 175px;
     text-align: center;
 }
+
+
+/* confirmation buttons */
+.confirm-btn {
+    font-size: 14px;
+    border: 1px solid #444;
+    background: #eee;
+    font-family: 'helvetica';
+    border-radius: 5px;
+    width: 50px;
+    color: #444;
+}
+.confirm-btn:hover {
+    background: #ccc;
+}
+.noty_buttons {
+    text-align: center;
+}
