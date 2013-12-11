@@ -2,7 +2,7 @@ $(document).ready(function() {
     init()
 
     $('.input-daterange').datepicker({
-        format: 'yyyy-mm-dd',
+        // format: 'yyyy-mm-dd',
         startDate: (new Date()).toString()
         // orientation: "bottom auto"   
     });
@@ -42,9 +42,9 @@ $(document).ready(function() {
 
          var editPopup = '<h3> Please enter your new dates</h3>'+
                         '<div class="input-daterange" id="time">'+
-                            '<input type="text" class="input-small" name="start"  id="start_date_edit" placeholder="yyyy-mm-dd" />' +
+                            '<input type="text" class="input-small" name="start"  id="start_date_edit" placeholder="mm-dd-yyyy" />' +
                             '<span class="add-on" style="color: black">to</span>' +
-                            '<input type="text" class="input-small" name="end" id = "end_date_edit" placeholder="yyyy-mm-dd" />' +
+                            '<input type="text" class="input-small" name="end" id = "end_date_edit" placeholder="mm-dd-yyyy" />' +
                             '<button class="btn btn-success save-button" id='+ itID + '>Save</button>' +
 
                         '</div>';
@@ -125,7 +125,7 @@ $(document).ready(function() {
             buttons: [
                 {addClass: 'confirm-btn', text: 'Ok', onClick: function($noty) {
                         store.remove(itID);
-                        window.location.reload(true);
+                        window.location = 'index.html';
                         $noty.close();
                     }   
                 },

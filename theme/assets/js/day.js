@@ -355,7 +355,7 @@ $(document).ready(function() {
 
         var menus = typeof info.menu !== "undefined" ? '| <a href=\"' + info.menu.url + '\" target=\"_blank\">View Menu</a>' : '';
 
-        var rating = typeof info.rating !== "undefined" ? "Rating: " + info.rating + ' / 10' : "";
+        var rating = typeof info.rating !== "undefined" ? "Rating: <span class='rating-text'>" + info.rating + '</span> / 10' : "";
 
         var str = venue_name + '<br><small>' + venue_categories + '<br>' + address + '</small><br><hr /><p>' + phone + '<br>' + url + '<br>' + hours + ' ' + menus + '</p><hr />' + rating ;
 
